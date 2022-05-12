@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lms_android/courses.dart';
+import 'package:lms_android/dashboard.dart';
+import 'package:lms_android/profile.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,35 +14,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: MyStatefulWidget(),
+      home: Home(),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<Home> createState() => _HomeState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Dashboard',
-      style: optionStyle,
-    ),
-    Text(
-      'All courses',
-      style: optionStyle,
-    ),
-    Text(
-      'User Profile',
-      style: optionStyle,
-    ),
+    Dashboard(),
+    Courses(),
+    Profile(),
   ];
 
   void _onItemTapped(int index) {
