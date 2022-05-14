@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/courses.dart';
-import 'package:lms_android/dashboard.dart';
-import 'package:lms_android/profile.dart';
+import 'package:lms_android/views/courses.dart';
+import 'package:lms_android/views/dashboard.dart';
+import 'package:lms_android/views/profile.dart';
 
 void main() => runApp(const MyApp());
 
