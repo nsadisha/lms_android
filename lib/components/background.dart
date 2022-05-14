@@ -22,7 +22,7 @@ class Background extends StatelessWidget {
             top: 0,
             right: 0,
             child: Image.asset(
-                "assets/images/top1.png",
+                "assets/images/top_wave_01.png",
                 width: size.width
             ),
           ),
@@ -30,23 +30,7 @@ class Background extends StatelessWidget {
             top: 0,
             right: 0,
             child: Image.asset(
-                "assets/images/top2.png",
-                width: size.width
-            ),
-          ),
-          Positioned(
-            top: 50,
-            right: 30,
-            child: Image.asset(
-                "assets/images/main.png",
-                width: size.width * 0.35
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Image.asset(
-                "assets/images/bottom1.png",
+                "assets/images/top_wave_02.png",
                 width: size.width
             ),
           ),
@@ -54,7 +38,15 @@ class Background extends StatelessWidget {
             bottom: 0,
             right: 0,
             child: Image.asset(
-                "assets/images/bottom2.png",
+                "assets/images/bottom_wave_01.png",
+                width: size.width
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Image.asset(
+                "assets/images/bottom_wave_02.png",
                 width: size.width
             ),
           ),
