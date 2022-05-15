@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms_android/views/CourseDetails.dart';
 import 'package:lms_android/views/Courses.dart';
 import 'package:lms_android/views/Dashboard.dart';
 import 'package:lms_android/views/Profile.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: Home(),
+      home: CourseDetails(courseId: 1,),
     );
   }
 }
