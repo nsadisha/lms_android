@@ -20,7 +20,6 @@ class UserService{
   UserService._(LocalStorageManager lsm) : _storage = lsm;
 
   Future<http.Response> signin(String email, String password) async {
-    //log(Uri.parse(loginURL).toString());
     final res = await http.post(
       Uri.parse("$baseURL/login"),
       headers: {
@@ -39,6 +38,20 @@ class UserService{
       _storage.setRefreshToken(obj["refresh_token"]);
     } else {
       throw "Unable to retrieve user";
+    }
+    return res;
+  }
+
+  Future<http.Response> signup(String email, String name, String role, String password) async {
+    final res = await http.post(
+      Uri.parse("$baseURL/signup"),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode({'id': "", 'name': name, 'email': email, 'password': password, 'role': role})
+    );
+
+    if (res.statusCode != 201) {
+      log(res.statusCode.toString());
+      throw "Unable to create user";
     }
     return res;
   }
