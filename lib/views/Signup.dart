@@ -188,7 +188,7 @@ class _SignupViewState extends State<SignupView> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
-
+                  Navigator.pop(context)
                 },
                 child: const Text(
                   "Already Have an Account? Sign in",
