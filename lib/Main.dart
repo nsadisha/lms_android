@@ -3,6 +3,7 @@ import 'package:lms_android/views/Courses.dart';
 import 'package:lms_android/views/Dashboard.dart';
 import 'package:lms_android/views/Profile.dart';
 import 'package:lms_android/views/Signin.dart';
+import 'package:lms_android/views/signup.dart';
 
 void main() => runApp(const MyApp());
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Home(),
         '/login': (context) => const SigninView(),
-        '/signup': (context) => const SigninView(),
+        '/signup': (context) => const SignupView(),
       },
     );
   }
