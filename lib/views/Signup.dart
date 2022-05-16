@@ -153,39 +153,47 @@ class _SignupViewState extends State<SignupView> {
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: RaisedButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(0),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      gradient: const LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 255, 136, 34),
-                            Color.fromARGB(255, 255, 177, 41)
-                          ]
-                      )
-                  ),
-                  padding: const EdgeInsets.all(0),
-                  child: const Text(
-                    "SIGN UP",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: Container(
+                      height: 50.0,
+                      width: size.width * 0.5,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(80.0),
+                          gradient: const LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 255, 136, 34),
+                                Color.fromARGB(255, 255, 177, 41)
+                              ]
+                          )
+                      ),
                     ),
                   ),
-                ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
+                      primary: Colors.white,
+                      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+                      textStyle: const TextStyle(fontSize: 14),
+                    ),
+                    onPressed: () async {
+
+                    },
+                    child: const Text(
+                      "SIGN UP",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 
             Container(
               alignment: Alignment.centerRight,
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 45, vertical: 10),
               child: GestureDetector(
                 onTap: () => {
                   Navigator.pop(context)
