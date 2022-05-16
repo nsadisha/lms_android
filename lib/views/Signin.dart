@@ -5,8 +5,6 @@ import 'package:lms_android/service/UserService.dart';
 import 'package:lms_android/views/signup.dart';
 import '../components/background.dart';
 import '../models/User.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 
 class SigninView extends StatefulWidget {
@@ -27,37 +25,19 @@ class _SigninViewState extends State<SigninView> {
   late final userService;
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
-  String url = "http://192.168.8.182:8090/login";
 
   void initUserService() async {
     userService = await UserService.getInstance();
-  }
-
-  Future signin(String email, String password) async {
-    log(Uri.parse(url).toString());
-    final res = await http.post(
-      Uri.parse(url),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      encoding: Encoding.getByName('utf-8'),
-      body: {
-        "email": email,
-        "password": password
-      },
-    );
-    if (res.statusCode == 200) {
-      final obj = jsonDecode(res.body);
-      log('sucess$obj');
-    } else {
-      throw "Unable to retrieve user";
-    }
   }
 
   @override
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
+
+    navigateToHome(){
+      Navigator.pushNamed(context, '/');
+    }
 
     return Scaffold(
       body: Background(
@@ -148,10 +128,12 @@ class _SigninViewState extends State<SigninView> {
                   child: RaisedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        //signin(user.email, user.password);
                         var response = await userService.signin(user.email, user.password);
-                        log(response.statusCode.toString());
-                        log(await userService.getToken());
+                        if(response.statusCode == 200){
+                          navigateToHome();
+                        }else{
+                          log(response.statusCode.toString());
+                        }
                       }
                     },
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
@@ -187,7 +169,7 @@ class _SigninViewState extends State<SigninView> {
                   margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: GestureDetector(
                     onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupView()))
+                      Navigator.pushNamed(context, '/signup')
                     },
                     child: const Text(
                       "Don't Have an Account? Sign up",
