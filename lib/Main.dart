@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lms_android/views/Courses.dart';
 import 'package:lms_android/views/Dashboard.dart';
 import 'package:lms_android/views/Profile.dart';
+import 'package:lms_android/views/Signin.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: Home(),
+      home: SigninView(),
     );
   }
 }
