@@ -1,7 +1,8 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/background.dart';
-
 import '../models/User.dart';
+import '../service/UserService.dart';
 
 enum UserRole { student, lecturer }
 
@@ -17,17 +18,26 @@ class _SignupViewState extends State<SignupView> {
   @override
   void initState(){
     super.initState();
+    initUserService();
   }
 
   UserRole? _character = UserRole.student;
 
   final _formKey = GlobalKey<FormState>();
-  User user = User.signup("","","","","");
+  User user = User.signup("","","","STUDENT","");
 
+  late final userService;
+  void initUserService() async {
+    userService = await UserService.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    navigateToLogin(){
+      Navigator.pop(context);
+    }
 
     return Scaffold(
       body: Background(
@@ -80,9 +90,9 @@ class _SignupViewState extends State<SignupView> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: TextFormField(
-                    controller: TextEditingController(text: user.email),
+                    controller: TextEditingController(text: user.name),
                     onChanged: (val) {
-                      user.email = val;
+                      user.name = val;
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -130,7 +140,7 @@ class _SignupViewState extends State<SignupView> {
                                     onChanged: (UserRole? value) {
                                       setState(() {
                                         _character = value;
-                                        user.role = value as String;
+                                        user.role = "STUDENT";
                                       });
                                     },
                                   ),
@@ -148,7 +158,7 @@ class _SignupViewState extends State<SignupView> {
                                     onChanged: (UserRole? value) {
                                       setState(() {
                                         _character = value;
-                                        user.role = value as String;
+                                        user.role = "LECTURER";
                                       });
                                     },
                                   ),
@@ -242,7 +252,12 @@ class _SignupViewState extends State<SignupView> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-
+                            var response = await userService.signup(user.email, user.name, user.role, user.password);
+                            if(response.statusCode == 201){
+                              navigateToLogin();
+                            }else{
+                              log(response.statusCode.toString());
+                            }
                           }
                         },
                         child: const Text(
