@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'LocalStorageManager.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class UserService{
   final baseURL = "http://192.168.8.182:8090";
@@ -33,7 +35,6 @@ class UserService{
 
     if (res.statusCode == 200) {
       final obj = jsonDecode(res.body);
-      //log('success: $obj');
       _storage.setToken(obj["access_token"]);
       _storage.setRefreshToken(obj["refresh_token"]);
     } else {
@@ -48,5 +49,18 @@ class UserService{
 
   Future<String> getToken() async {
     return await _storage.getToken();
+  }
+
+   signout() async{
+    _storage.removeAllTokens();
+  }
+
+  getUserDetails() async {
+    if(await isSigned()){
+      log("signin first");
+    }else{
+      Map<String, dynamic> payload = Jwt.parseJwt(await getToken());
+      log(payload.toString());
+    }
   }
 }
