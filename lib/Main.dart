@@ -13,9 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: _title,
-      home: SigninView(),
+      initialRoute: '/login',
+      routes: {
+        '/': (context) => const Home(),
+        '/login': (context) => const SigninView(),
+        '/signup': (context) => const SigninView(),
+      },
     );
   }
 }
