@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:lms_android/service/UserService.dart';
 import 'package:lms_android/views/signup.dart';
 import '../components/background.dart';
 import '../models/User.dart';
@@ -17,9 +18,20 @@ class SigninView extends StatefulWidget {
 
 class _SigninViewState extends State<SigninView> {
 
+  @override
+  void initState(){
+    super.initState();
+    initUserService();
+  }
+
+  late final userService;
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
   String url = "http://192.168.8.182:8090/login";
+
+  void initUserService() async {
+    userService = await UserService.getInstance();
+  }
 
   Future signin(String email, String password) async {
     log(Uri.parse(url).toString());
@@ -134,9 +146,12 @@ class _SigninViewState extends State<SigninView> {
                   alignment: Alignment.centerRight,
                   margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        signin(user.email, user.password);
+                        //signin(user.email, user.password);
+                        var response = await userService.signin(user.email, user.password);
+                        log(response.statusCode.toString());
+                        log(await userService.getToken());
                       }
                     },
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
