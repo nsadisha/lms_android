@@ -21,15 +21,16 @@ class _CourseDetailsState extends State<CourseDetails> {
     const Tab(text: 'Marks', icon: Icon(Icons.edit))
   ];
 
-  List<Widget> tabViewsForStudents = [
-    const ActivityTabForStudents(),
-    const AnnouncementsTabForStudents(),
-    const EmptyState(text: "No activity details"),
-    const EmptyState(text: "No activity marks"),
-  ];
-
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> tabViewsForStudents = [
+      const ActivityTabForStudents(),
+      AnnouncementsTabForStudents(courseId: widget.courseId),
+      const EmptyState(text: "No activity details"),
+      const EmptyState(text: "No activity marks"),
+    ];
+
     return DefaultTabController(
       length: myTabs.length,
       child: Scaffold(

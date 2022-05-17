@@ -5,7 +5,8 @@ import 'package:lms_android/models/announcement.dart';
 import 'package:lms_android/service/course_service.dart';
 
 class AnnouncementsTabForStudents extends StatefulWidget {
-  const AnnouncementsTabForStudents({Key? key}) : super(key: key);
+  final int courseId;
+  const AnnouncementsTabForStudents({Key? key, required this.courseId}) : super(key: key);
 
   @override
   State<AnnouncementsTabForStudents> createState() => _AnnouncementsTabForStudentsState();
@@ -22,9 +23,9 @@ class _AnnouncementsTabForStudentsState extends State<AnnouncementsTabForStudent
   }
 
   void initCourseService() async {
-    setState(()async{
-      courseService = await CourseService.getInstance();
-    });
+    await CourseService.getInstance().then((value) => setState((){
+      courseService = value;
+    }));
   }
   Future<List<Announcement>> fetchAnnouncements(int courseId) async {
     return await courseService.getAnnouncements(courseId);
@@ -33,7 +34,7 @@ class _AnnouncementsTabForStudentsState extends State<AnnouncementsTabForStudent
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Announcement>>(
-      future: fetchAnnouncements(4),
+      future: fetchAnnouncements(widget.courseId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
