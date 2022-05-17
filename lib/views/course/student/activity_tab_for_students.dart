@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lms_android/components/empty_state.dart';
 
-class ActivityTab extends StatelessWidget {
-  const ActivityTab({Key? key}) : super(key: key);
+class ActivityTabForStudents extends StatelessWidget {
+  const ActivityTabForStudents({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("No Activity!"),
-    );
+    return const EmptyState(text: "No activity");
   }
 }
