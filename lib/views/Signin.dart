@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:lms_android/views/signup.dart';
+import 'package:lms_android/service/UserService.dart';
 import '../components/background.dart';
 import '../models/User.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 
 class SigninView extends StatefulWidget {
@@ -17,35 +15,28 @@ class SigninView extends StatefulWidget {
 
 class _SigninViewState extends State<SigninView> {
 
+  @override
+  void initState(){
+    super.initState();
+    initUserService();
+  }
+
+  late final userService;
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
-  String url = "http://192.168.8.182:8090/login";
 
-  Future signin(String email, String password) async {
-    log(Uri.parse(url).toString());
-    final res = await http.post(
-      Uri.parse(url),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      encoding: Encoding.getByName('utf-8'),
-      body: {
-        "email": email,
-        "password": password
-      },
-    );
-    if (res.statusCode == 200) {
-      final obj = jsonDecode(res.body);
-      log('sucess$obj');
-    } else {
-      throw "Unable to retrieve user";
-    }
+  void initUserService() async {
+    userService = await UserService.getInstance();
   }
 
   @override
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
+
+    navigateToHome(){
+      Navigator.pushNamed(context, '/');
+    }
 
     return Scaffold(
       body: Background(
@@ -133,46 +124,57 @@ class _SigninViewState extends State<SigninView> {
                 Container(
                   alignment: Alignment.centerRight,
                   margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  child: RaisedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        signin(user.email, user.password);
-                      }
-                    },
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.all(0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50.0,
-                      width: size.width * 0.5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(80.0),
-                          gradient: const LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 255, 136, 34),
-                                Color.fromARGB(255, 255, 177, 41)
-                              ]
-                          )
-                      ),
-                      padding: const EdgeInsets.all(0),
-                      child: const Text(
-                        "LOGIN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold
+                  child: Stack(
+                      children: <Widget>[
+                        Positioned.fill(
+                          child: Container(
+                                height: 50.0,
+                                width: size.width * 0.5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(80.0),
+                                    gradient: const LinearGradient(
+                                        colors: [
+                                          Color.fromARGB(255, 255, 136, 34),
+                                          Color.fromARGB(255, 255, 177, 41)
+                                        ]
+                                    )
+                                ),
+                          ),
                         ),
-                      ),
-                    ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
+                            primary: Colors.white,
+                            // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+                            textStyle: const TextStyle(fontSize: 14),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              var response = await userService.signin(user.email, user.password);
+                              if(response.statusCode == 200){
+                                navigateToHome();
+                              }else{
+                                log(response.statusCode.toString());
+                              }
+                            }
+                          },
+                          child: const Text(
+                              "LOGIN",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                              ),
+                          ),
+                        ),
+                      ],
                   ),
                 ),
 
                 Container(
                   alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 45, vertical: 10),
                   child: GestureDetector(
                     onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupView()))
+                      Navigator.pushNamed(context, '/signup')
                     },
                     child: const Text(
                       "Don't Have an Account? Sign up",
