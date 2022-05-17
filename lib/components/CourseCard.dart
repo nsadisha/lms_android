@@ -27,7 +27,24 @@ class CourseCard extends StatelessWidget {
                     height: 150,
                     child: Column(
                         children: [
-
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: SizedBox(
+                                    width: 250,
+                                    height: 36,
+                                    child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: c,
+                                            borderRadius: const BorderRadius.only(
+                                                topLeft: Radius.zero,
+                                                topRight: Radius.zero,
+                                                bottomLeft: Radius.zero,
+                                                bottomRight: Radius.circular(40.0)
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ],
                     ),
                 ),
