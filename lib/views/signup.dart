@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/background.dart';
-import '../models/User.dart';
-import '../service/UserService.dart';
+import '../models/user.dart';
+import '../service/user_service.dart';
 
 enum UserRole { student, lecturer }
 

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lms_android/components/empty_state.dart';
+import 'package:lms_android/views/course/student/activity_tab_for_students.dart';
+import 'package:lms_android/views/course/student/announcements_tab_for_students.dart';
 
 class CourseDetails extends StatefulWidget {
   final int courseId;
@@ -16,6 +19,13 @@ class _CourseDetailsState extends State<CourseDetails> {
     const Tab(text: 'Announcements', icon: Icon(Icons.announcement),),
     const Tab(text: 'Details', icon: Icon(Icons.details),),
     const Tab(text: 'Marks', icon: Icon(Icons.edit))
+  ];
+
+  List<Widget> tabViewsForStudents = [
+    const ActivityTabForStudents(),
+    const AnnouncementsTabForStudents(),
+    const EmptyState(text: "No activity details"),
+    const EmptyState(text: "No activity marks"),
   ];
 
   @override
@@ -36,18 +46,8 @@ class _CourseDetailsState extends State<CourseDetails> {
             tabs: myTabs,
           ),
         ),
-        body: Container(
-          child: TabBarView(
-            children: myTabs.map((Tab tab) {
-              final String? label = tab.text?.toLowerCase();
-              return Center(
-                child: Text(
-                  'This is the $label tab',
-                  style: const TextStyle(fontSize: 36),
-                ),
-              );
-            }).toList(),
-          ),
+        body: TabBarView(
+          children: tabViewsForStudents,
         ),
       ),
     );

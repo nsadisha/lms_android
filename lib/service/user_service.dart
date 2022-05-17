@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:lms_android/BaseURL.dart';
-import 'LocalStorageManager.dart';
+import 'package:lms_android/baseURL.dart';
+import 'local_storage_manager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class UserService{
