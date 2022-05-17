@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Announcement extends StatelessWidget {
+class AnnouncementTile extends StatelessWidget {
   final int id;
   final String title;
   final String body;
 
-  const Announcement({Key? key, required this.id, required this.title, required this.body}) : super(key: key);
+  const AnnouncementTile({Key? key, required this.id, required this.title, required this.body}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
