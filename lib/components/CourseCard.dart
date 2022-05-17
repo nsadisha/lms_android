@@ -45,6 +45,13 @@ class CourseCard extends StatelessWidget {
                                     ),
                                 ),
                             ),
+                            ListTile(
+                                title: Text(courseName),
+                                subtitle: Text(
+                                courseCode,
+                                style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                ),
+                            ),
                         ],
                     ),
                 ),
