@@ -52,6 +52,16 @@ class CourseCard extends StatelessWidget {
                                 style: TextStyle(color: Colors.black.withOpacity(0.6)),
                                 ),
                             ),
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                    child: Text(
+                                        'Conducted by: $lecturerName',
+                                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                ),
+                            ),
                         ],
                     ),
                 ),
