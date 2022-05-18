@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lms_android/models/announcement.dart';
-import '../BaseURL.dart';
+import 'package:lms_android/baseURL.dart';
+import 'package:lms_android/models/course.dart';
 import 'local_storage_manager.dart';
 
 class CourseService{
@@ -43,6 +44,22 @@ class CourseService{
       return announcementList;
     } else {
       throw "Unable to retrieve announcements";
+    }
+  }
+
+  Future<Course> getCourseDetails(int courseId) async {
+    final res = await http.get(
+        Uri.parse("$baseURL/course/$courseId"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : "Bearer $_token",
+        }
+    );
+
+    if (res.statusCode == 200) {
+      return Course.fromJson(jsonDecode(res.body));
+    } else {
+      throw "Unable to retrieve course";
     }
   }
 }
