@@ -30,4 +30,25 @@ class _CoursesState extends State<Courses> {
     return await courseService.getAllCourses();
   }
 
+  @override
+  Widget build(BuildContext context) {
+
+    return FutureBuilder<List<Course>>(
+      future: fetchCourses(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (BuildContext context, int index){
+
+              });
+        } else if (snapshot.hasError) {
+          // return const EmptyState(text: "No announcements",);
+        }
+
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
+    );
+  }
 }
