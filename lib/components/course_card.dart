@@ -21,6 +21,7 @@ class CourseCard extends StatelessWidget {
             child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
                 onTap: () {
+                    Navigator.pushNamed(context, '/course', arguments: id );
                 },
                 child: SizedBox(
                     width: 350,

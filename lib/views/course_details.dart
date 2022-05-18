@@ -4,8 +4,8 @@ import 'package:lms_android/views/course/student/activity_tab_for_students.dart'
 import 'package:lms_android/views/course/student/announcements_tab_for_students.dart';
 
 class CourseDetails extends StatefulWidget {
-  final int courseId;
-  const CourseDetails({Key? key, required this.courseId}) : super(key: key);
+
+  const CourseDetails({Key? key}) : super(key: key);
   //CourseDetails(this.courseId);
 
   @override
@@ -24,9 +24,11 @@ class _CourseDetailsState extends State<CourseDetails> {
   @override
   Widget build(BuildContext context) {
 
+    final courseId = ModalRoute.of(context)!.settings.arguments as int;
+
     List<Widget> tabViewsForStudents = [
       const ActivityTabForStudents(),
-      AnnouncementsTabForStudents(courseId: widget.courseId),
+      AnnouncementsTabForStudents(courseId: courseId),
       const EmptyState(text: "No activity details"),
       const EmptyState(text: "No activity marks"),
     ];
