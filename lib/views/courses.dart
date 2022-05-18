@@ -26,4 +26,8 @@ class _CoursesState extends State<Courses> {
     }));
   }
 
+  Future<List<Course>> fetchCourses() async {
+    return await courseService.getAllCourses();
+  }
+
 }
