@@ -23,17 +23,52 @@ class _DashboardState extends State<Dashboard> {
 
   void initUserService() async {
     userService = await UserService.getInstance();
-
-    log(userService.getUserDetails().toString());
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return Text(
-      "userService.getUserDetails()",
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          SafeArea(
+            child: Padding(
+              padding:  EdgeInsets.all(18.0),
+              child: Column(
+                children:<Widget>[
+                  Container(
+                    height: 150,
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30)),
+                            Text('Devid decor', style: TextStyle(fontFamily: 'Mukta',fontSize: 30)),
+                            Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
+
+                          ],
+                        ),
+                        SizedBox(width: 80,),
+                        Container(
+                          width: 70,
+                          height: 70,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/graduate.png'),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
+
+
 

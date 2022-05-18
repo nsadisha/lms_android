@@ -5,7 +5,7 @@ import 'LocalStorageManager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class UserService{
-  final baseURL = "http://192.168.8.182:8090";
+  final baseURL = "http://192.168.1.4:8080";
   final LocalStorageManager _storage;
   static UserService? _instance;
 
