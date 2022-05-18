@@ -20,4 +20,10 @@ class _CoursesState extends State<Courses> {
     initCourseService();
   }
 
+  void initCourseService() async {
+    await CourseService.getInstance().then((value) => setState((){
+      courseService = value;
+    }));
+  }
+
 }
