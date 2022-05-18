@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import '../service/user_service.dart';
 
 class Dashboard extends StatefulWidget {
@@ -18,7 +15,7 @@ class _DashboardState extends State<Dashboard> {
     initUserService();
   }
 
-  late final userService;
+  late final UserService userService;
 
 
   void initUserService() async {

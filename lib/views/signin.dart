@@ -21,7 +21,7 @@ class _SigninViewState extends State<SigninView> {
     initUserService();
   }
 
-  late final userService;
+  late final UserService userService;
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
 

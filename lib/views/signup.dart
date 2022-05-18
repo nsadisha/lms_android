@@ -26,7 +26,7 @@ class _SignupViewState extends State<SignupView> {
   final _formKey = GlobalKey<FormState>();
   User user = User.signup("","","","STUDENT","");
 
-  late final userService;
+  late final UserService userService;
   void initUserService() async {
     userService = await UserService.getInstance();
   }

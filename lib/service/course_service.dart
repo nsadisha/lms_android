@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lms_android/models/announcement.dart';
 import 'package:lms_android/baseURL.dart';
 import 'package:lms_android/models/course.dart';
+import '../models/announcement.dart';
 import 'local_storage_manager.dart';
 
-class CourseService{
+class CourseService {
   final baseURL = BaseURL.url;
   static CourseService? _instance;
   late final String _token;
@@ -20,13 +20,42 @@ class CourseService{
 
   CourseService._(String token) : _token = token;
 
-  Future<List<Announcement>> getAnnouncements(int courseId) async {
+  Future<List<Course>> getAllCourses() async {
     final res = await http.get(
-      Uri.parse("$baseURL/course/$courseId/announcements"),
+      Uri.parse("$baseURL/course/all"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : "Bearer $_token",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      List<Course> courseList = <Course>[];
+      List<dynamic> values=<dynamic>[];
+
+      values = json.decode(res.body);
+
+      if(values.isNotEmpty){
+        for(int i=0;i<values.length;i++){
+          if(values[i]!=null){
+            Map<String,dynamic> map = values[i];
+            courseList .add(Course.fromJson(map));
+          }
+        }
       }
+      return courseList;
+
+    } else {
+      throw "Unable to retrieve courses";
+    }
+  }
+
+  Future<List<Announcement>> getAnnouncements(int courseId) async {
+    final res = await http.get(
+        Uri.parse("$baseURL/course/$courseId/announcements"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : "Bearer $_token",
+        }
     );
 
     if (res.statusCode == 200) {
