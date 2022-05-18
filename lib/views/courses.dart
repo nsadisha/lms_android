@@ -9,3 +9,15 @@ class Courses extends StatefulWidget {
   @override
   State<Courses> createState() => _CoursesState();
 }
+
+class _CoursesState extends State<Courses> {
+
+  late final CourseService courseService;
+
+  @override
+  void initState(){
+    super.initState();
+    initCourseService();
+  }
+
+}
