@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:lms_android/baseURL.dart';
+import 'package:lms_android/models/user.dart';
+import 'package:lms_android/service/course_service.dart';
+import '../models/course.dart';
 import 'local_storage_manager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -69,12 +72,13 @@ class UserService{
     _storage.removeAllTokens();
   }
 
-  getUserDetails() async {
+  Future<User> getUserDetails() async {
     if(await isSigned()){
-      log("signin first");
-    }else{
       Map<String, dynamic> payload = Jwt.parseJwt(await getToken());
-      log(payload.toString());
+      // log(payload["courses"].toString());
+      return User.JWT(payload["sub"], payload["role"], List<String>.from(payload["courses"]));
+    }else{
+      throw "signin first";
     }
   }
 }
