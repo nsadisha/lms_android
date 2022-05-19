@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
+import 'package:lms_android/views/course.dart';
 import 'package:lms_android/views/course_content.dart';
 import 'package:lms_android/views/course_details.dart';
 import 'package:lms_android/views/courses.dart';
@@ -19,13 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      initialRoute: '/course-details',
+      initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
         '/login': (context) => const SigninView(),
         '/signup': (context) => const SignupView(),
-        '/course': (context) => const CourseContent(),
-        '/course-details' : (context) => const CourseDetails(course: Course(id: 1, courseName: "courseName", courseCode: "courseCode", lecturerName: "lecturerName", description: "description")),
+        '/course': (context) => const CourseView(),
       },
     );
   }
