@@ -51,7 +51,7 @@ class CourseService {
     }
   }
 
-  Future<List<Course>> getEnrolledCourses(studentId) async {
+  Future<List<Course>> getEnrolledCourses(int studentId) async {
     final res = await http.get(
       Uri.parse("$baseURL/student/$studentId/courses"),
       headers: {
