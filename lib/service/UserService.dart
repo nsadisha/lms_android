@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:lms_android/baseURL.dart';
 import 'LocalStorageManager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class UserService{
-  final baseURL = "http://192.168.1.4:8080";
+
+  final baseURL = BaseURL.url;
+
   final LocalStorageManager _storage;
   static UserService? _instance;
 

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lms_android/components/course_card.dart';
 import '../service/UserService.dart';
 
 class Dashboard extends StatefulWidget {
@@ -37,25 +38,29 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                 children:<Widget>[
                   Container(
-                    height: 180,
+                    height: 150,
                     child: Row(
                       children: <Widget>[
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30)),
-                            Text('Devid decor', style: TextStyle(fontFamily: 'Mukta',fontSize: 30)),
+                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                            Text('Devid decor', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
                             Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
                           ],
                         ),
                         SizedBox(width:100,),
-                        Container(
-                          width: 70,
-                          height: 70,
-                          child: (
-                            Image(image: AssetImage('assets/images/graduate.png'))
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 80,
+                              child: (
+                                Image(image: AssetImage('assets/images/graduate.png'))
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
@@ -73,20 +78,7 @@ class _DashboardState extends State<Dashboard> {
                     crossAxisSpacing: 10,
                     primary: false,
                     children: <Widget>[
-                      Card(
-                        child: Column(
-                          children: <Widget>[
-                            Text('data')
-                          ],
-                        ),
-                      ),
-                      Card(
-                        child: Column(
-                          children: <Widget>[
-                            Text('data', style: TextStyle(fontFamily: 'Mukta',fontSize: 30))
-                          ],
-                        ),
-                      ),
+                      CourseCard(id: 122, courseName: 'Mobile app', courseCode: 'SENG 12233', lecturerName: 'amir malik')
                     ],
                     crossAxisCount: 2,))
 

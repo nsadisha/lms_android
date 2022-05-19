@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/views/Courses.dart';
-import 'package:lms_android/views/Dashboard.dart';
+import 'package:lms_android/views/DashboardForStudents.dart';
 import 'package:lms_android/views/Profile.dart';
 import 'package:lms_android/views/Signin.dart';
 import 'package:lms_android/views/signup.dart';
