@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../service/UserService.dart';
 
 class Dashboard extends StatefulWidget {
@@ -37,7 +37,7 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                 children:<Widget>[
                   Container(
-                    height: 150,
+                    height: 180,
                     child: Row(
                       children: <Widget>[
                         Column(
@@ -49,17 +49,47 @@ class _DashboardState extends State<Dashboard> {
 
                           ],
                         ),
-                        SizedBox(width: 80,),
+                        SizedBox(width:100,),
                         Container(
                           width: 70,
                           height: 70,
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/graduate.png'),
+                          child: (
+                            Image(image: AssetImage('assets/images/graduate.png'))
                           ),
                         )
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                    height: 60,
+                    child: Row(
+                      children: <Widget>[
+                        Text('Enrolled Courses',style: TextStyle(fontFamily: 'Mukta',fontSize: 30))
+                      ],
+                    ),
+                  ),
+                  Expanded(child: GridView.count(
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    primary: false,
+                    children: <Widget>[
+                      Card(
+                        child: Column(
+                          children: <Widget>[
+                            Text('data')
+                          ],
+                        ),
+                      ),
+                      Card(
+                        child: Column(
+                          children: <Widget>[
+                            Text('data', style: TextStyle(fontFamily: 'Mukta',fontSize: 30))
+                          ],
+                        ),
+                      ),
+                    ],
+                    crossAxisCount: 2,))
+
                 ],
               ),
             ),
