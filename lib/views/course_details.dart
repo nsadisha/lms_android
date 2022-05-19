@@ -1,13 +1,22 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
 
-class CourseDetails extends StatelessWidget {
+class CourseDetails extends StatefulWidget {
   final Course course;
+  final bool isStudent;
 
-  const CourseDetails({Key? key, required this.course}) : super(key: key);
+  const CourseDetails({Key? key, required this.course, required this.isStudent}) : super(key: key);
+
+  @override
+  State<CourseDetails> createState() => _CourseDetailsState();
+}
+
+class _CourseDetailsState extends State<CourseDetails> {
 
   @override
   Widget build(BuildContext context) {
+
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -23,7 +32,7 @@ class CourseDetails extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Text(
-          course.courseName,
+          widget.course.courseName,
           style: const TextStyle(color: Colors.white, fontSize: 45.0),
         ),
         const SizedBox(height: 30.0),
@@ -35,7 +44,7 @@ class CourseDetails extends StatelessWidget {
                 child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      course.courseCode,
+                      widget.course.courseCode,
                       style: const TextStyle(color: Colors.white),
                     ))),
           ],
@@ -75,22 +84,26 @@ class CourseDetails extends StatelessWidget {
     );
 
     final bottomContentText = Text(
-      course.description,
-      style: const TextStyle(fontSize: 18.0),
+      widget.course.description,
+      style: const TextStyle(fontSize: 14.0),
     );
     final readButton = Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         width: MediaQuery.of(context).size.width,
-        child: ElevatedButton(
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
-            primary: const Color.fromRGBO(58, 66, 86, 1.0),
-            // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-            textStyle: const TextStyle(fontSize: 14),
+        child: Visibility(
+          visible: widget.isStudent,
+          child: ElevatedButton(
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
+              primary: const Color.fromRGBO(58, 66, 86, 1.0),
+              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+              textStyle: const TextStyle(fontSize: 14),
+            ),
+            onPressed: () => {},
+            child: const Text("Enroll", style: TextStyle(color: Colors.white)),
           ),
-          onPressed: () => {},
-          child: const Text("Enroll", style: TextStyle(color: Colors.white)),
-        ));
+        )
+    );
     final bottomContent = Container(
       // height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -98,14 +111,18 @@ class CourseDetails extends StatelessWidget {
       padding: const EdgeInsets.all(40.0),
       child: Center(
         child: Column(
-          children: <Widget>[bottomContentText, readButton],
+          children: <Widget>[
+            bottomContentText, readButton],
         ),
       ),
     );
 
     return Scaffold(
       body: Column(
-        children: <Widget>[topContent, bottomContent],
+        children: <Widget>[
+          topContent,
+          bottomContent
+        ],
       ),
     );
   }
