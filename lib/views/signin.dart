@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:lms_android/service/UserService.dart';
+import 'package:lms_android/service/user_service.dart';
 import '../components/background.dart';
-import '../models/User.dart';
+import '../models/user.dart';
 
 
 class SigninView extends StatefulWidget {
@@ -21,7 +21,7 @@ class _SigninViewState extends State<SigninView> {
     initUserService();
   }
 
-  late final userService;
+  late final UserService userService;
   final _formKey = GlobalKey<FormState>();
   User user = User("", "");
 
