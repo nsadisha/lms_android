@@ -5,14 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
 import '../service/UserService.dart';
 
-class DashboardForStudents extends StatefulWidget {
-  const DashboardForStudents({Key? key}) : super(key: key);
+class DashboardForLecturers extends StatefulWidget {
+  const DashboardForLecturers({Key? key}) : super(key: key);
 
   @override
-  State<DashboardForStudents> createState() => _DashboardForStudentsState();
+  State<DashboardForLecturers> createState() => _DashboardForLecturersState();
 }
 
-class _DashboardForStudentsState extends State<DashboardForStudents> {
+class _DashboardForLecturersState extends State<DashboardForLecturers> {
   @override
   void initState(){
     super.initState();
@@ -57,7 +57,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                             Container(
                               width: 80,
                               child: (
-                                Image(image: AssetImage('assets/images/graduate.png'))
+                                  Image(image: AssetImage('assets/images/teacher.png'))
                               ),
                             ),
                           ],
@@ -69,7 +69,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                     height: 60,
                     child: Row(
                       children: <Widget>[
-                        Text('Enrolled Courses',style: TextStyle(fontFamily: 'Mukta',fontSize: 30))
+                        Text('Conducting Courses',style: TextStyle(fontFamily: 'Mukta',fontSize: 30))
                       ],
                     ),
                   ),

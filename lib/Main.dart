@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Dashboard(),
+    DashboardForStudents(),
     Courses(),
     Profile(),
   ];
