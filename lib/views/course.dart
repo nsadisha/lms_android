@@ -38,7 +38,7 @@ class _CourseViewState extends State<CourseView> {
   }
 
   Future<Course> getCourse(int courseId) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     return await courseService.getCourseDetails(courseId);
   }
 
@@ -46,6 +46,10 @@ class _CourseViewState extends State<CourseView> {
     course = await getCourse(courseId);
     int index = user.courses.indexWhere((c) => c == course.courseCode);
     return index != -1;
+  }
+
+  bool isStudent() {
+    return user.role == "STUDENT";
   }
 
   @override
@@ -60,8 +64,7 @@ class _CourseViewState extends State<CourseView> {
             if(snapshot.data == true){
               return const CourseContent();
             }else{
-              log(course.courseName);
-              return CourseDetails(course: course);
+              return CourseDetails(course: course, isStudent: isStudent());
             }
           }else if (snapshot.hasError) {
             return const EmptyState(text: "Course not found");
