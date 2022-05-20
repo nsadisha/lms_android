@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
+import 'package:lms_android/service/lecturer_service.dart';
 
 class DetailsTabForLecturers extends StatefulWidget {
   final Course course;
@@ -10,6 +11,26 @@ class DetailsTabForLecturers extends StatefulWidget {
 }
 
 class _DetailsTabForLecturersState extends State<DetailsTabForLecturers> {
+
+  late final LecturerService lecturerService;
+  late final int enrolledStudents;
+
+
+  @override
+  void initState(){
+    super.initState();
+    initCourseService();
+  }
+
+  void initCourseService() async {
+    await LecturerService.getInstance().then((value) => setState((){
+      lecturerService = value;
+    }));
+  }
+
+  Future<int> getStudentCount(int courseId) async {
+    return await lecturerService.getEnrolledStudentsCount(courseId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,20 +77,36 @@ class _DetailsTabForLecturersState extends State<DetailsTabForLecturers> {
           SizedBox(height: size.height * 0.05),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
+            children: [
+              const Text(
                   "Students Enrolled : ",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                   ),
               ),
-              Text(
-                  "13",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 14,
-                  ),
+              FutureBuilder(
+                future: getStudentCount(widget.course.id),
+                builder: (context, snapshot){
+                  if (snapshot.hasData) {
+                    return Text(
+                      snapshot.data.toString(),
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 14,
+                      ),
+                    );
+                  }else if (snapshot.hasError) {
+                    return const Text(
+                      "None",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                }
               ),
             ],
           )
