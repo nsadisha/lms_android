@@ -1,0 +1,145 @@
+import 'dart:developer';
+import 'package:flutter/material.dart';
+import '../models/announcement.dart';
+
+class AnnouncementForm extends StatefulWidget {
+
+  const AnnouncementForm({Key? key}) : super(key: key);
+
+  @override
+  State<AnnouncementForm> createState() => _AnnouncementFormState();
+}
+
+class _AnnouncementFormState extends State<AnnouncementForm> {
+
+  Announcement announcement = Announcement("", "");
+
+  @override
+  Widget build(BuildContext context) {
+
+    final formKey = GlobalKey<FormState>();
+    Size size = MediaQuery.of(context).size;
+
+    return Form(
+      key: formKey,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+            SizedBox(height: size.height * 0.03),
+
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: const Text(
+                "Add an Announcement",
+                style: TextStyle(fontSize: 24,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            SizedBox(height: size.height * 0.03),
+
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: TextFormField(
+                controller: TextEditingController(text: announcement.title),
+                onChanged: (val) {
+                  announcement.title = val;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Title is Empty';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  errorStyle: TextStyle(fontSize: 10, color: Colors.black),
+                  labelText: "Title",
+                ),
+              ),
+            ),
+
+            SizedBox(height: size.height * 0.03),
+
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: TextFormField(
+                controller: TextEditingController(text: announcement.body),
+                onChanged: (val) {
+                  announcement.body = val;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Message is Empty';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                    errorStyle: TextStyle(fontSize: 10, color: Colors.black),
+                    labelText: "Message"
+                ),
+              ),
+            ),
+
+            SizedBox(height: size.height * 0.03),
+
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: Container(
+                      height: 50.0,
+                      width: size.width * 0.5,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(80.0),
+                          gradient: const LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 255, 136, 34),
+                                Color.fromARGB(255, 255, 177, 41)
+                              ]
+                          )
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
+                      primary: Colors.white,
+                      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+                      textStyle: const TextStyle(fontSize: 14),
+                    ),
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        log("hiii");
+                        // var response = await userService.signin(user.email, user.password);
+                        // if(response.statusCode == 200){
+                        //   navigateToHome();
+                        // }else{
+                        //   log(response.statusCode.toString());
+                        // }
+                      }
+                    },
+                    child: const Text(
+                      "SUBMIT",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
