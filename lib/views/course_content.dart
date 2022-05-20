@@ -35,7 +35,7 @@ class _CourseContentState extends State<CourseContent> {
     List<Widget> tabViewsForStudents = [
       const ActivityTabForStudents(),
       AnnouncementsTabForStudents(courseId: widget.course.id),
-      DetailsTabForStudents(course: widget.course),
+      DetailsTabForStudents(course: widget.course, userId: widget.userId),
     ];
 
     List<Widget> tabViewsForLecturers = [
