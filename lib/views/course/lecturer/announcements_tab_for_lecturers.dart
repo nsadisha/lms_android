@@ -3,11 +3,12 @@ import 'package:lms_android/components/announcement_form.dart';
 import 'package:lms_android/components/announcement_tile.dart';
 import 'package:lms_android/components/empty_state.dart';
 import 'package:lms_android/models/announcement.dart';
+import 'package:lms_android/models/course.dart';
 import 'package:lms_android/service/course_service.dart';
 
 class AnnouncementsTabForLectures extends StatefulWidget {
-  final int courseId;
-  const AnnouncementsTabForLectures({Key? key, required this.courseId}) : super(key: key);
+  final Course course;
+  const AnnouncementsTabForLectures({Key? key, required this.course}) : super(key: key);
 
   @override
   State<AnnouncementsTabForLectures> createState() => _AnnouncementsTabForLecturesState();
@@ -38,7 +39,7 @@ class _AnnouncementsTabForLecturesState extends State<AnnouncementsTabForLecture
 
     return Scaffold(
       body: FutureBuilder<List<Announcement>>(
-        future: fetchAnnouncements(widget.courseId),
+        future: fetchAnnouncements(widget.course.id),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -72,10 +73,10 @@ class _AnnouncementsTabForLecturesState extends State<AnnouncementsTabForLecture
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
                 elevation: 16,
-                child: const SizedBox(
+                child: SizedBox(
                   height: 400.0,
                   width: 360.0,
-                  child: AnnouncementForm()
+                  child: AnnouncementForm(course: widget.course)
                   ),
                 );
             },

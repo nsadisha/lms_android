@@ -1,10 +1,11 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../models/announcement.dart';
+import '../models/course.dart';
 
 class AnnouncementForm extends StatefulWidget {
-
-  const AnnouncementForm({Key? key}) : super(key: key);
+  final Course course;
+  const AnnouncementForm({Key? key, required this.course}) : super(key: key);
 
   @override
   State<AnnouncementForm> createState() => _AnnouncementFormState();
@@ -32,16 +33,37 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
             Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: const Text(
-                "Add an Announcement",
-                style: TextStyle(fontSize: 24,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  const Text(
+                    "Add an Announcement",
+                    style: TextStyle(fontSize: 24,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Text(
+                      "Course: ${widget.course.courseName}",
+                      style: const TextStyle(fontSize: 14,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text(
+                    widget.course.courseCode,
+                    style: const TextStyle(fontSize: 12,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
 
-            SizedBox(height: size.height * 0.03),
+            SizedBox(height: size.height * 0.02),
 
             Container(
               alignment: Alignment.center,

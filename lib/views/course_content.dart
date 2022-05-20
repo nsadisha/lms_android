@@ -40,7 +40,7 @@ class _CourseContentState extends State<CourseContent> {
 
     List<Widget> tabViewsForLecturers = [
       const ActivityTabForLecturers(),
-      AnnouncementsTabForLectures(courseId: widget.course.id),
+      AnnouncementsTabForLectures(course: widget.course),
       DetailsTabForLectures(course: widget.course),
       const EmptyState(text: "No activity marks"),
     ];
