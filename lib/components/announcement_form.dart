@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:lms_android/service/course_service.dart';
 import '../models/announcement.dart';
 import '../models/course.dart';
 
@@ -13,13 +14,28 @@ class AnnouncementForm extends StatefulWidget {
 
 class _AnnouncementFormState extends State<AnnouncementForm> {
 
+  late final CourseService courseService;
+  final formKey = GlobalKey<FormState>();
   Announcement announcement = Announcement("", "");
+
+  @override
+  void initState(){
+    super.initState();
+    initCourseService();
+  }
+
+  void initCourseService() async {
+    courseService = await CourseService.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    final formKey = GlobalKey<FormState>();
     Size size = MediaQuery.of(context).size;
+
+    navigateBack(){
+      Navigator.pop(context, true);
+    }
 
     return Form(
       key: formKey,
@@ -36,7 +52,7 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
               child: Column(
                 children: [
                   const Text(
-                    "Add an Announcement",
+                    "Post an Announcement",
                     style: TextStyle(fontSize: 24,
                         color: Colors.blue,
                         fontWeight: FontWeight.bold),
@@ -138,15 +154,17 @@ class _AnnouncementFormState extends State<AnnouncementForm> {
                       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                       textStyle: const TextStyle(fontSize: 14),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        log("hiii");
-                        // var response = await userService.signin(user.email, user.password);
-                        // if(response.statusCode == 200){
-                        //   navigateToHome();
-                        // }else{
-                        //   log(response.statusCode.toString());
-                        // }
+                        var response = await courseService.postAnnouncement(
+                            widget.course.id,
+                            announcement.title,
+                            announcement.body);
+                        if(response.statusCode == 200){
+                          navigateBack();
+                        }else{
+                          log(response.statusCode.toString());
+                        }
                       }
                     },
                     child: const Text(

@@ -74,13 +74,18 @@ class _AnnouncementsTabForLecturesState extends State<AnnouncementsTabForLecture
                     borderRadius: BorderRadius.circular(40)),
                 elevation: 16,
                 child: SizedBox(
-                  height: 400.0,
-                  width: 360.0,
-                  child: AnnouncementForm(course: widget.course)
-                  ),
-                );
+                    height: 400.0,
+                    width: 360.0,
+                    child: AnnouncementForm(course: widget.course)
+                ),
+              );
             },
-          );
+          ).then((exit) {
+            if (exit == null) return;
+            if (exit) {
+              setState(() {});
+            }
+          });
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
