@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lms_android/components/announcement_form.dart';
 import 'package:lms_android/components/announcement_tile.dart';
 import 'package:lms_android/components/empty_state.dart';
 import 'package:lms_android/models/announcement.dart';
@@ -15,6 +16,7 @@ class AnnouncementsTabForLectures extends StatefulWidget {
 class _AnnouncementsTabForLecturesState extends State<AnnouncementsTabForLectures> {
 
   late final CourseService courseService;
+  Announcement announcement = Announcement(" ", " ");
 
   @override
   void initState(){
@@ -62,7 +64,23 @@ class _AnnouncementsTabForLecturesState extends State<AnnouncementsTabForLecture
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+                elevation: 16,
+                child: const SizedBox(
+                  height: 400.0,
+                  width: 360.0,
+                  child: AnnouncementForm()
+                  ),
+                );
+            },
+          );
+        },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       )
