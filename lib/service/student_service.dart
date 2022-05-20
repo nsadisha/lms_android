@@ -34,5 +34,20 @@ class StudentService {
     }
   }
 
+  Future<http.Response> unEnrollStudent(int studentId, int courseId) async {
+    final res = await http.post(
+      Uri.parse("$baseURL/student/$studentId/unenroll/$courseId"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      return res;
+    } else {
+      throw "Unable to unenroll student";
+    }
+  }
+
 }
 
