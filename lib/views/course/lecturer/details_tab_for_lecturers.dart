@@ -28,8 +28,8 @@ class _DetailsTabForLecturersState extends State<DetailsTabForLecturers> {
     }));
   }
 
-  Future<int> getStudentCount(int courseId) async {
-    return await lecturerService.getEnrolledStudentsCount(courseId);
+  Future<int> getStudentCount() async {
+    return await lecturerService.getEnrolledStudentsCount(widget.course.id);
   }
 
   @override
@@ -86,7 +86,7 @@ class _DetailsTabForLecturersState extends State<DetailsTabForLecturers> {
                   ),
               ),
               FutureBuilder(
-                future: getStudentCount(widget.course.id),
+                future: getStudentCount(),
                 builder: (context, snapshot){
                   if (snapshot.hasData) {
                     return Text(
