@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
 
-class DetailsTabForLectures extends StatefulWidget {
+class DetailsTabForLecturers extends StatefulWidget {
   final Course course;
-  const DetailsTabForLectures({Key? key, required this.course}) : super(key: key);
+  const DetailsTabForLecturers({Key? key, required this.course}) : super(key: key);
 
   @override
-  State<DetailsTabForLectures> createState() => _DetailsTabForLecturesState();
+  State<DetailsTabForLecturers> createState() => _DetailsTabForLecturersState();
 }
 
-class _DetailsTabForLecturesState extends State<DetailsTabForLectures> {
+class _DetailsTabForLecturersState extends State<DetailsTabForLecturers> {
 
   @override
   Widget build(BuildContext context) {

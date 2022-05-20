@@ -6,15 +6,15 @@ import 'package:lms_android/models/announcement.dart';
 import 'package:lms_android/models/course.dart';
 import 'package:lms_android/service/course_service.dart';
 
-class AnnouncementsTabForLectures extends StatefulWidget {
+class AnnouncementsTabForLecturers extends StatefulWidget {
   final Course course;
-  const AnnouncementsTabForLectures({Key? key, required this.course}) : super(key: key);
+  const AnnouncementsTabForLecturers({Key? key, required this.course}) : super(key: key);
 
   @override
-  State<AnnouncementsTabForLectures> createState() => _AnnouncementsTabForLecturesState();
+  State<AnnouncementsTabForLecturers> createState() => _AnnouncementsTabForLecturersState();
 }
 
-class _AnnouncementsTabForLecturesState extends State<AnnouncementsTabForLectures> {
+class _AnnouncementsTabForLecturersState extends State<AnnouncementsTabForLecturers> {
 
   late final CourseService courseService;
   Announcement announcement = Announcement(" ", " ");
