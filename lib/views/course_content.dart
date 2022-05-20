@@ -11,8 +11,9 @@ import 'course/student/details_tab_for_students.dart';
 class CourseContent extends StatefulWidget {
   final Course course;
   final bool isStudent;
+  final int userId;
 
-  const CourseContent ({Key? key, required this.course, required this.isStudent}) : super(key: key);
+  const CourseContent ({Key? key, required this.course, required this.isStudent, required this.userId}) : super(key: key);
 
   @override
   State<CourseContent> createState() => _CourseContentState();

@@ -62,7 +62,7 @@ class _CourseViewState extends State<CourseView> {
         builder: (context, snapshot){
           if (snapshot.hasData){
             if(snapshot.data == true){
-              return const CourseContent();
+              return CourseContent(course: course, isStudent: isStudent(), userId: user.id);
             }else{
               return CourseDetails(course: course, isStudent: isStudent());
             }
