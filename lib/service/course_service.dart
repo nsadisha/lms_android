@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:lms_android/baseURL.dart';
 import 'package:lms_android/models/course.dart';
@@ -90,5 +91,21 @@ class CourseService {
     } else {
       throw "Unable to retrieve course";
     }
+  }
+
+  Future<http.Response> postAnnouncement(int courseId, String title, String message) async {
+    final res = await http.post(
+        Uri.parse("$baseURL/lecturer/$courseId/announcement"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : "Bearer $_token"
+        },
+        body: json.encode({'id': "", 'title': title, 'description': message})
+    );
+
+    if (res.statusCode != 200) {
+      throw "Unable to post announcement";
+    }
+    return res;
   }
 }
