@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
+import 'package:lms_android/service/student_service.dart';
 
 class DetailsTabForStudents extends StatefulWidget {
   final Course course;
-  const DetailsTabForStudents({Key? key, required this.course}) : super(key: key);
+  final int userId;
+  const DetailsTabForStudents({Key? key, required this.course, required this.userId}) : super(key: key);
 
   @override
   State<DetailsTabForStudents> createState() => _DetailsTabForStudentsState();
 }
 
 class _DetailsTabForStudentsState extends State<DetailsTabForStudents> {
+
+  late final StudentService studentService;
+  late final double marks;
+
+
+  @override
+  void initState(){
+    super.initState();
+    initStudentService();
+  }
+
+  void initStudentService() async {
+    await StudentService.getInstance().then((value) => setState((){
+      studentService = value;
+    }));
+  }
+
+  Future<double> getStudentMarks() async {
+    return await studentService.getMarksForCourse(widget.userId, widget.course.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,21 +78,38 @@ class _DetailsTabForStudentsState extends State<DetailsTabForStudents> {
           SizedBox(height: size.height * 0.05),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 "Your Marks : ",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-              Text(
-                "13.0%",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 14,
-                ),
+              FutureBuilder(
+                  future: getStudentMarks(),
+                  builder: (context, snapshot){
+                    if (snapshot.hasData) {
+                      return Text(
+                        "${snapshot.data} %",
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontSize: 14,
+                        ),
+                      );
+                    }else if (snapshot.hasError) {
+                      return const Text(
+                        "Not assigned yet",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      );
+                    }
+                    return const CircularProgressIndicator();
+                  }
               ),
+
             ],
           )
         ],
