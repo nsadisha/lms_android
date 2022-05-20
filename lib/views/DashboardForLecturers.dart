@@ -1,9 +1,11 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
-import '../service/UserService.dart';
+import 'package:lms_android/models/User.dart';
+import 'package:lms_android/models/course.dart';
+import 'package:lms_android/service/CourseService.dart';
+import 'package:lms_android/service/UserService.dart';
 
 class DashboardForLecturers extends StatefulWidget {
   const DashboardForLecturers({Key? key}) : super(key: key);
@@ -16,14 +18,27 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
   @override
   void initState(){
     super.initState();
-    initUserService();
+    initServices();
   }
 
-  late final userService;
+  late final UserService userService;
+  late final CourseService courseService;
+  late final User user;
+  late final Course course;
 
 
-  void initUserService() async {
+
+
+  void initServices() async {
     userService = await UserService.getInstance();
+    courseService = await CourseService.getInstance();
+    user = await userService.getUserDetails();
+  }
+
+  //get conducting courses
+  Future<List<Course>> fetchCourses(lecturerId) async {
+    return await courseService.getConductingCourses(lecturerId);
+
   }
 
   @override
@@ -43,9 +58,9 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                       children: <Widget>[
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
+                          children: const <Widget>[
                             Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Text('Devid decor', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                            Text('name', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
                             Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
                           ],
@@ -68,19 +83,34 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                   Container(
                     height: 60,
                     child: Row(
-                      children: <Widget>[
+                      children: const <Widget>[
                         Text('Conducting Courses',style: TextStyle(fontFamily: 'Mukta',fontSize: 30))
                       ],
                     ),
                   ),
-                  Expanded(child: GridView.count(
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    primary: false,
-                    children: <Widget>[
-                      CourseCard(id: 122, courseName: 'Mobile app', courseCode: 'SENG 12233', lecturerName: 'amir malik')
-                    ],
-                    crossAxisCount: 2,))
+                  Expanded(child: FutureBuilder<List<Course>>(
+                      future:fetchCourses(user.id),
+                      builder: (context,snapshot) {
+                        if(snapshot.connectionState==ConnectionState.waiting) {
+                          return Center(child:  CircularProgressIndicator());
+                        }
+                        if(snapshot.connectionState==ConnectionState.none){
+                          return Text('Error while loading');
+                        }
+                        return GridView.count(
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          primary: false,
+                          crossAxisCount: 2,
+                          children:snapshot.data!.map((course) =>
+                              CourseCard(
+                                  id: course.id,
+                                  courseName: course.courseName,
+                                  courseCode:course.courseCode, lecturerName:
+                                  course.lecturerName)).toList(),
+                        );
+                      }
+                  ))
 
                 ],
               ),

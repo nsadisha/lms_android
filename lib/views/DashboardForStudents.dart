@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
+import 'package:lms_android/models/User.dart';
 import 'package:lms_android/service/CourseService.dart';
 import '../models/course.dart';
 import '../service/UserService.dart';
@@ -18,25 +19,24 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
   @override
   void initState(){
     super.initState();
-    initUserService();
+    initServices();
   }
 
   late final UserService userService;
   late final CourseService courseService;
-  List <Course>_test =[
-    Course(id: 1221, courseName: 'Mobile Application', courseCode: 'seng 12223', lecturerName: 'amara', description: 'hi'),
-    Course(id: 3221, courseName: 'Mobile Application', courseCode: 'seng 12223', lecturerName: 'amara', description: 'hi'),
-    Course(id: 1321, courseName: 'Mobile Application', courseCode: 'seng 12223', lecturerName: 'amara', description: 'hi')
+  late final User user;
+  late final Course course;
 
-  ];
 
-  void initUserService() async {
+  void initServices() async {
     userService = await UserService.getInstance();
+    courseService =await CourseService.getInstance();
+    user = await userService.getUserDetails();
   }
 
-
-  Future<List<Course>> fetchCourses() async {
-   return await Future<List<Course>>.delayed(const Duration(seconds: 5),()=>_test);
+  //get enrolled courses
+  Future<List<Course>> fetchCourses(studentId) async {
+   return await courseService.getEnrolledCourses(studentId);
 
   }
 
@@ -88,18 +88,26 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                     ),
                   ),
                   Expanded(child: FutureBuilder<List<Course>>(
-                    future:fetchCourses(),
+                    future:fetchCourses(user.id),
                     builder: (context,snapshot) {
                       if(snapshot.connectionState==ConnectionState.waiting) {
-                        return Center(child:  CircularProgressIndicator());
+                        return const Center(child:  CircularProgressIndicator());
                       }
-
+                      if(snapshot.connectionState==ConnectionState.none){
+                        return const Text('Error while loading');
+                      }
                       return GridView.count(
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         primary: false,
-                        children:snapshot.data!.map((e) => CourseCard(id: e.id, courseName: e.courseName, courseCode:e.courseCode, lecturerName: e.lecturerName)).toList(),
-                        crossAxisCount: 2,);
+                        crossAxisCount: 2,
+                        children:snapshot.data!.map((course) =>
+                            CourseCard(
+                            id: course.id,
+                            courseName: course.courseName,
+                            courseCode:course.courseCode, lecturerName:
+                            course.lecturerName)).toList(),
+                      );
                     }
                   ))
 
