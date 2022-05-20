@@ -19,10 +19,10 @@ class _DetailsTabForLecturersState extends State<DetailsTabForLecturers> {
   @override
   void initState(){
     super.initState();
-    initCourseService();
+    initLecturerService();
   }
 
-  void initCourseService() async {
+  void initLecturerService() async {
     await LecturerService.getInstance().then((value) => setState((){
       lecturerService = value;
     }));
