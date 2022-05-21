@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/components/course_card.dart';
-import 'package:lms_android/models/course.dart';
-import 'package:lms_android/service/CourseService.dart';
+import 'package:lms_android/service/course_service.dart';
+
+import '../components/course_card.dart';
+import '../models/course.dart';
 
 class Courses extends StatefulWidget {
   const Courses({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:lms_android/components/course_card.dart';
 import 'package:lms_android/models/User.dart';
 import 'package:lms_android/service/CourseService.dart';
 import '../models/course.dart';
-import '../service/UserService.dart';
+import '../service/user_service.dart';
 
 class DashboardForStudents extends StatefulWidget {
   const DashboardForStudents({Key? key}) : super(key: key);
@@ -36,9 +36,9 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
     await CourseService.getInstance().then((value) => setState((){
       courseService = value;
     }));
-    await userService.getUserDetails().then((value) => setState((){
-      user = value;
-    }));
+    // await userService.getUserDetails().then((value) => setState((){
+    //   user = value;
+    // }));
   }
 
   //get enrolled courses

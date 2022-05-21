@@ -5,7 +5,7 @@ import 'package:lms_android/components/course_card.dart';
 import 'package:lms_android/models/User.dart';
 import 'package:lms_android/models/course.dart';
 import 'package:lms_android/service/CourseService.dart';
-import 'package:lms_android/service/UserService.dart';
+import 'package:lms_android/service/user_service.dart';
 
 class DashboardForLecturers extends StatefulWidget {
   const DashboardForLecturers({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
   void initServices() async {
     userService = await UserService.getInstance();
     courseService = await CourseService.getInstance();
-    user = await userService.getUserDetails();
+    //user = await userService.getUserDetails();
   }
 
   //get conducting courses

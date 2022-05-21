@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/views/Courses.dart';
-import 'package:lms_android/views/DashboardForStudents.dart';
-import 'package:lms_android/views/Profile.dart';
-import 'package:lms_android/views/Signin.dart';
+import 'package:lms_android/models/course.dart';
+import 'package:lms_android/views/course_content.dart';
+import 'package:lms_android/views/course_details.dart';
+import 'package:lms_android/views/courses.dart';
+import 'package:lms_android/views/dashboard.dart';
+import 'package:lms_android/views/profile.dart';
+import 'package:lms_android/views/signin.dart';
 import 'package:lms_android/views/signup.dart';
 
 void main() => runApp(const MyApp());
@@ -21,6 +24,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Home(),
         '/login': (context) => const SigninView(),
         '/signup': (context) => const SignupView(),
+        '/course': (context) => const CourseContent(),
+        '/course-details' : (context) => const CourseDetails(course: Course(id: 1, courseName: "courseName", courseCode: "courseCode", lecturerName: "lecturerName", description: "description")),
       },
     );
   }
@@ -38,7 +43,7 @@ class _HomeState extends State<Home> {
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    DashboardForStudents(),
+    Home(),
     Courses(),
     Profile(),
   ];
