@@ -7,7 +7,7 @@ class User {
   late String name;
   late String role;
   late String cpass;
-  late double marks;
+  late double? marks;
   late List<String> courses;
 
   User(this.email, this.password);

@@ -50,7 +50,7 @@ class LecturerService {
       List<dynamic> values=<dynamic>[];
 
       values = json.decode(res.body);
-      log(values.toString());
+
       if(values.isNotEmpty){
         for(int i=0;i<values.length;i++){
           if(values[i]!=null){
@@ -59,6 +59,7 @@ class LecturerService {
           }
         }
       }
+
       return studentList;
 
     } else {
