@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
-import 'package:lms_android/models/User.dart';
+import 'package:lms_android/models/user.dart';
 import 'package:lms_android/service/CourseService.dart';
 import '../models/course.dart';
 import '../service/user_service.dart';
@@ -32,18 +32,21 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
     await UserService.getInstance().then((value) => setState((){
       userService = value;
     }));
-    //await userService.getToken().then((value) => print(value));
     await CourseService.getInstance().then((value) => setState((){
       courseService = value;
     }));
-    // await userService.getUserDetails().then((value) => setState((){
-    //   user = value;
-    // }));
+
   }
 
   //get enrolled courses
-  Future<List<Course>> fetchCourses(studentId) async {
-   return await courseService.getEnrolledCourses(studentId);
+  Future<List<Course>> fetchCourses() async {
+    User user = await userService.getUserDetails();
+   return await courseService.getEnrolledCourses(user.id);
+  }
+
+  Future<String> getUserName() async {
+    User user = await userService.getUserDetails();
+    return user.name;
   }
 
   @override
@@ -70,14 +73,22 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                             ),
                         ),
                     ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Text('Devid decor', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
+                        FutureBuilder<String>(
+                          future: getUserName(),
+                          builder: (context,snapshot) {
+                          if(snapshot.connectionState==ConnectionState.waiting) {
+                            return const Center(child:  CircularProgressIndicator());
+                          }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:  <Widget>[
+                                Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                                Text('name', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                                Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
-                          ],
+                              ],
+                            );
+                          }
                         ),
                         SizedBox(width:100,),
                         Column(
@@ -102,30 +113,38 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                       ],
                     ),
                   ),
-                  // Expanded(
-                  //     child: FutureBuilder<List<Course>>(
-                  //   future: fetchCourses(1),
-                  //   builder: (context,snapshot) {
-                  //     if(snapshot.connectionState==ConnectionState.waiting) {
-                  //       return const Center(child:  CircularProgressIndicator());
-                  //     }
-                  //     if(snapshot.connectionState==ConnectionState.none){
-                  //       return const Text('Error while loading');
-                  //     }
-                  //     return GridView.count(
-                  //       mainAxisSpacing: 10,
-                  //       crossAxisSpacing: 10,
-                  //       primary: false,
-                  //       crossAxisCount: 2,
-                  //       children:snapshot.data!.map((course) =>
-                  //           CourseCard(
-                  //           id: course.id,
-                  //           courseName: course.courseName,
-                  //           courseCode:course.courseCode, lecturerName:
-                  //           course.lecturerName)).toList(),
-                  //     );
-                  //   }
-                  // ))
+                  Expanded(
+                      child: FutureBuilder<List<Course>>(
+                    future: fetchCourses(),
+                    builder: (context,snapshot) {
+                      // if(snapshot.connectionState==ConnectionState.waiting) {
+                      //   return const Center(child:  CircularProgressIndicator());
+                      // }
+                      // if(snapshot.connectionState==ConnectionState.none){
+                      //   return const Text('Error while loading');
+                      // }
+                      if(snapshot.hasData) {
+                        return ListView(
+                          padding: const EdgeInsets.all(8),
+                          children: snapshot.data!.map((course) =>
+                                  CourseCard(
+                                      id: course.id,
+                                      courseName: course.courseName,
+                                      courseCode: course.courseCode, lecturerName:
+                                  course.lecturerName)
+                          ).toList(),
+                        );
+                      }else if(snapshot.hasError){
+                        return const Center(
+                          child: Text(
+                            "Something went wrong!"
+                          ),
+                        );
+                      }
+                      //loading
+                      return const CircularProgressIndicator();
+                    }
+                  ))
 
                 ],
               ),
