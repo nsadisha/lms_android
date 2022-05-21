@@ -64,7 +64,7 @@ class _CourseViewState extends State<CourseView> {
             if(snapshot.data == true){
               return CourseContent(course: course, isStudent: isStudent(), userId: user.id);
             }else{
-              return CourseDetails(course: course, isStudent: isStudent());
+              return CourseDetails(course: course, isStudent: isStudent(), student: user);
             }
           }else if (snapshot.hasError) {
             return const EmptyState(text: "Course not found");

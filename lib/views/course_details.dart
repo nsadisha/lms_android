@@ -2,11 +2,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
 
+import '../models/user.dart';
+import '../service/student_service.dart';
+
 class CourseDetails extends StatefulWidget {
   final Course course;
+  final User student;
   final bool isStudent;
 
-  const CourseDetails({Key? key, required this.course, required this.isStudent}) : super(key: key);
+  const CourseDetails({Key? key, required this.course, required this.isStudent, required this.student}) : super(key: key);
 
   @override
   State<CourseDetails> createState() => _CourseDetailsState();
@@ -14,10 +18,29 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
 
+  late final StudentService studentService;
+
+  @override
+  void initState(){
+    super.initState();
+    initStudentService();
+  }
+
+  void initStudentService() async {
+    await StudentService.getInstance().then((value) => setState((){
+      studentService = value;
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
+
+    navigateToCourseContent(){
+      log("Success");
+      // Navigator.pop(context, true);
+    }
 
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +155,12 @@ class _CourseDetailsState extends State<CourseDetails> {
                   textStyle: const TextStyle(fontSize: 14),
                 ),
                 onPressed: () async {
-
+                  var response = await studentService.enrollStudent(widget.student.id, widget.course.id);
+                  if(response.statusCode == 200){
+                    navigateToCourseContent();
+                  }else{
+                    log(response.statusCode.toString());
+                  }
                 },
                 child: const Text(
                   "ENROLL",
