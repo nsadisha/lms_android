@@ -34,8 +34,12 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
               child: Column(
                 children: [
                   const Icon(Icons.arrow_forward),
-                  Text(
+                  widget.student.marks != null ? Text(
                     'Change Marks',
+                    style: TextStyle(color: Colors.blue.withOpacity(0.6)),
+                  ):
+                  Text(
+                    'Add Marks',
                     style: TextStyle(color: Colors.blue.withOpacity(0.6)),
                   ),
                 ],
@@ -59,12 +63,16 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
                       'Marks :',
                       style: TextStyle(color: Colors.black),
                     ),
-                    Text(
+                    widget.student.marks != null ?Text(
                       '${widget.student.marks} %',
                       style: const TextStyle(color: Colors.black),
+                    ):
+                    const Text(
+                      'Not assigned yet',
+                      style: TextStyle(color: Colors.grey),
                     ),
                   ],
-                ),
+                )
               ),
             ),
           ),

@@ -34,8 +34,6 @@ class _MarksTabForLecturersState extends State<MarksTabForLecturers> {
   @override
   Widget build(BuildContext context) {
 
-    Size size = MediaQuery.of(context).size;
-
     return FutureBuilder<List<User>>(
         future: getEnrolledStudentMarks(),
         builder: (context, snapshot) {
@@ -47,7 +45,7 @@ class _MarksTabForLecturersState extends State<MarksTabForLecturers> {
                   int id = snapshot.data!.elementAt(index).id;
                   String name = snapshot.data!.elementAt(index).name;
                   String email = snapshot.data!.elementAt(index).email;
-                  double marks = snapshot.data!.elementAt(index).marks;
+                  double? marks = snapshot.data!.elementAt(index).marks;
 
                   return StudentMarksCard(
                       student: User.marks(id, email, name, marks)
