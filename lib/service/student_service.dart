@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lms_android/models/user.dart';
+
 import '../baseURL.dart';
 import 'package:http/http.dart' as http;
 import 'local_storage_manager.dart';
@@ -34,7 +36,20 @@ class StudentService {
     }
   }
 
-
+  Future<User> getStudentDetails(int studentId) async {
+    final res = await http.get(
+      Uri.parse("$baseURL/student/$studentId"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      return User.fromJson(jsonDecode(res.body));
+    } else {
+      throw "Unable to retrieve student";
+    }
+  }
 
   Future<http.Response> unEnrollStudent(int studentId, int courseId) async {
     final res = await http.post(
