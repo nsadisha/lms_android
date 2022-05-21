@@ -82,7 +82,7 @@ class CourseService {
 
   Future<List<Course>> getConductingCourses(int lecturerId) async {
     final res = await http.get(
-      Uri.parse("$baseURL/student/$lecturerId/courses"),
+      Uri.parse("$baseURL/lecturer/$lecturerId/courses"),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $_token"

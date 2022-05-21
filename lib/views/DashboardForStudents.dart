@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,17 +28,22 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
   late final User user;
   late final Course course;
 
-
   void initServices() async {
-    userService = await UserService.getInstance();
-    courseService =await CourseService.getInstance();
-    user = await userService.getUserDetails();
+    await UserService.getInstance().then((value) => setState((){
+      userService = value;
+    }));
+    //await userService.getToken().then((value) => print(value));
+    await CourseService.getInstance().then((value) => setState((){
+      courseService = value;
+    }));
+    await userService.getUserDetails().then((value) => setState((){
+      user = value;
+    }));
   }
 
   //get enrolled courses
   Future<List<Course>> fetchCourses(studentId) async {
    return await courseService.getEnrolledCourses(studentId);
-
   }
 
   @override
@@ -55,6 +61,15 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                     height: 150,
                     child: Row(
                       children: <Widget>[
+
+                    Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage("assets/images/top_wave_01.png"),
+                        alignment: Alignment.topLeft,
+                            ),
+                        ),
+                    ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const <Widget>[
@@ -87,29 +102,30 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                       ],
                     ),
                   ),
-                  Expanded(child: FutureBuilder<List<Course>>(
-                    future:fetchCourses(user.id),
-                    builder: (context,snapshot) {
-                      if(snapshot.connectionState==ConnectionState.waiting) {
-                        return const Center(child:  CircularProgressIndicator());
-                      }
-                      if(snapshot.connectionState==ConnectionState.none){
-                        return const Text('Error while loading');
-                      }
-                      return GridView.count(
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        primary: false,
-                        crossAxisCount: 2,
-                        children:snapshot.data!.map((course) =>
-                            CourseCard(
-                            id: course.id,
-                            courseName: course.courseName,
-                            courseCode:course.courseCode, lecturerName:
-                            course.lecturerName)).toList(),
-                      );
-                    }
-                  ))
+                  // Expanded(
+                  //     child: FutureBuilder<List<Course>>(
+                  //   future: fetchCourses(1),
+                  //   builder: (context,snapshot) {
+                  //     if(snapshot.connectionState==ConnectionState.waiting) {
+                  //       return const Center(child:  CircularProgressIndicator());
+                  //     }
+                  //     if(snapshot.connectionState==ConnectionState.none){
+                  //       return const Text('Error while loading');
+                  //     }
+                  //     return GridView.count(
+                  //       mainAxisSpacing: 10,
+                  //       crossAxisSpacing: 10,
+                  //       primary: false,
+                  //       crossAxisCount: 2,
+                  //       children:snapshot.data!.map((course) =>
+                  //           CourseCard(
+                  //           id: course.id,
+                  //           courseName: course.courseName,
+                  //           courseCode:course.courseCode, lecturerName:
+                  //           course.lecturerName)).toList(),
+                  //     );
+                  //   }
+                  // ))
 
                 ],
               ),
