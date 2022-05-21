@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/models/course.dart';
-import 'package:lms_android/views/course.dart';
-import 'package:lms_android/views/course_content.dart';
-import 'package:lms_android/views/course_details.dart';
+import 'package:lms_android/views/course/course.dart';
 import 'package:lms_android/views/courses.dart';
-import 'package:lms_android/views/dashboard.dart';
+import 'package:lms_android/views/dashboard/dashboard.dart';
 import 'package:lms_android/views/profile.dart';
 import 'package:lms_android/views/signin.dart';
 import 'package:lms_android/views/signup.dart';
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
         '/login': (context) => const SigninView(),
@@ -40,8 +37,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Courses(),

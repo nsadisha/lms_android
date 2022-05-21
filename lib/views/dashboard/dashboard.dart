@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/user.dart';
-import 'package:lms_android/views/DashboardForLecturers.dart';
-import 'package:lms_android/views/DashboardForStudents.dart';
-import '../service/user_service.dart';
+import 'package:lms_android/views/dashboard/dashboard_for_lecturers.dart';
+import 'package:lms_android/views/dashboard/dashboard_for_students.dart';
+import '../../service/user_service.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);

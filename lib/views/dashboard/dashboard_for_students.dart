@@ -1,14 +1,10 @@
-import 'dart:developer';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
 import 'package:lms_android/models/user.dart';
-import 'package:lms_android/service/CourseService.dart';
 import 'package:lms_android/service/student_service.dart';
-import '../models/course.dart';
-import '../service/user_service.dart';
+import '../../models/course.dart';
+import '../../service/course_service.dart';
+import '../../service/user_service.dart';
 
 class DashboardForStudents extends StatefulWidget {
   const DashboardForStudents({Key? key}) : super(key: key);
@@ -64,7 +60,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
           padding:  const EdgeInsets.only(top: 25.0, left: 18.0, right: 18.0),
           child: Column(
             children:<Widget>[
-              Container(
+              SizedBox(
                 height: 150,
                 child: Row(
                   children: <Widget>[
@@ -86,9 +82,9 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:  <Widget>[
-                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Flexible(child: Text(snapshot.data!.name, style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9))),
-                            Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
+                            const Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                            Flexible(child: Text(snapshot.data!.name, style: const TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9))),
+                            const Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
                           ],
                         );
@@ -97,8 +93,8 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                     Expanded(child: Container()),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
+                      children: const [
+                        SizedBox(
                           width: 80,
                           child: (
                             Image(image: AssetImage('assets/images/graduate.png'))
@@ -109,7 +105,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 60,
                 child: Row(
                   children: const <Widget>[

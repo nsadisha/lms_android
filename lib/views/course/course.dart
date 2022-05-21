@@ -1,15 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/background.dart';
 import 'package:lms_android/service/course_service.dart';
 import 'package:lms_android/service/user_service.dart';
-import 'package:lms_android/views/course_content.dart';
-import 'package:lms_android/views/course_details.dart';
+import 'package:lms_android/views/course/course_content.dart';
+import 'package:lms_android/views/course/course_details.dart';
 
-import '../components/empty_state.dart';
-import '../models/course.dart';
-import '../models/user.dart';
+import '../../components/empty_state.dart';
+import '../../models/course.dart';
+import '../../models/user.dart';
 
 class CourseView extends StatefulWidget {
   const CourseView({Key? key}) : super(key: key);

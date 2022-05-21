@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/course.dart';
 
-import '../models/user.dart';
-import '../service/student_service.dart';
+import '../../models/user.dart';
+import '../../service/student_service.dart';
 
 class CourseDetails extends StatefulWidget {
   final Course course;

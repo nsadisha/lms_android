@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
 import 'package:lms_android/models/user.dart';
 import 'package:lms_android/models/course.dart';
@@ -63,7 +61,7 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
           padding:  const EdgeInsets.only(top: 25.0, left: 18.0, right: 18.0),
           child: Column(
             children:<Widget>[
-              Container(
+              SizedBox(
                 height: 150,
                 child: Row(
                   children: <Widget>[
@@ -76,35 +74,35 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:  <Widget>[
-                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                            const Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
                             Flexible(child:
                                 Text(snapshot.data!.name,
-                                style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9),
+                                style: const TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9),
                                 overflow: TextOverflow.fade,
                                 )
                             ),
-                            Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
+                            const Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
                           ],
                         );
                       }
                     ),
                     Expanded(child: Container()),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 80,
-                          child: (
-                              Image(image: AssetImage('assets/images/teacher.png'))
-                          ),
-                        ),
-                      ],
-                    )
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.end,
+                    //   children: const [
+                    //     SizedBox(
+                    //       width: 80,
+                    //       child: (
+                    //           Image(image: AssetImage('assets/images/teacher.png'))
+                    //       ),
+                    //     ),
+                    //   ],
+                    // )
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 60,
                 child: Row(
                   children: const <Widget>[
