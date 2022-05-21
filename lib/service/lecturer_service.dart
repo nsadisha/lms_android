@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import '../baseURL.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
@@ -67,5 +66,19 @@ class LecturerService {
     }
   }
 
+  Future<http.Response> assignMarksToStudent(int courseId, int studentId, double marks) async {
+    final res = await http.post(
+      Uri.parse("$baseURL/lecturer/$courseId/student/$studentId/mark/$marks"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      return res;
+    } else {
+      throw "Unable to get set marks for student";
+    }
+  }
 }
 
