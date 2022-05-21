@@ -1,16 +1,19 @@
 class Announcement {
-  final int id;
-  final String title;
-  final String body;
 
-  const Announcement({
+  late int id;
+  String title;
+  String body;
+
+  Announcement( this.title, this.body);
+  
+  Announcement.json({
     required this.id,
     required this.title,
     required this.body,
   });
 
   factory Announcement.fromJson(Map<String, dynamic> json) {
-    return Announcement(
+    return Announcement.json(
       id: json['id'],
       title: json['title'],
       body: json['description'],

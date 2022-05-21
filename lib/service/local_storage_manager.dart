@@ -30,7 +30,7 @@ class LocalStorageManager{
     return _prefs.getString(_refreshTokenKey)!;
   }
   Future<bool> isTokenAvailable() async {
-    return _prefs.getString(_tokenKey)!.isEmpty;
+    return _prefs.getString(_tokenKey)!.isNotEmpty;
   }
   Future<void> removeAllTokens() async {
     _prefs.remove(_tokenKey);

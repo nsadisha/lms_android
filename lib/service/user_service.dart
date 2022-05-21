@@ -77,8 +77,7 @@ class UserService{
   Future<User> getUserDetails() async {
     if(await isSigned()){
       Map<String, dynamic> payload = Jwt.parseJwt(await getToken());
-      // log(payload["courses"].toString());
-      return User.JWT(payload["sub"], payload["role"], List<String>.from(payload["courses"]));
+      return User.jwt(int.parse(payload["id"]), payload["sub"], payload["role"], List<String>.from(payload["courses"]));
     }else{
       throw "signin first";
     }
