@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/components/empty_state.dart';
 import 'package:lms_android/models/course.dart';
 import 'package:lms_android/views/course/lecturer/activity_tab_for_lecturers.dart';
 import 'package:lms_android/views/course/lecturer/announcements_tab_for_lecturers.dart';
 import 'package:lms_android/views/course/lecturer/details_tab_for_lecturers.dart';
+import 'package:lms_android/views/course/lecturer/marks_tab_for_lecturers.dart';
 import 'package:lms_android/views/course/student/activity_tab_for_students.dart';
 import 'package:lms_android/views/course/student/announcements_tab_for_students.dart';
 import 'course/student/details_tab_for_students.dart';
@@ -42,7 +42,7 @@ class _CourseContentState extends State<CourseContent> {
       const ActivityTabForLecturers(),
       AnnouncementsTabForLecturers(course: widget.course),
       DetailsTabForLecturers(course: widget.course),
-      const EmptyState(text: "No activity marks"),
+      MarksTabForLecturers(courseId: widget.course.id),
     ];
 
     return DefaultTabController(
