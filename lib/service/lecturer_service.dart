@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import '../baseURL.dart';
 import '../models/user.dart';
@@ -32,6 +33,36 @@ class LecturerService {
       return json.decode(res.body).length;
     } else {
       throw "Unable to get enrolled students count";
+    }
+  }
+
+  Future<List<User>> getEnrolledStudentsMarks(int courseId) async {
+    final res = await http.get(
+      Uri.parse("$baseURL/lecturer/$courseId/students/marks"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+
+    if (res.statusCode == 200) {
+      List<User> studentList = <User>[];
+      List<dynamic> values=<dynamic>[];
+
+      values = json.decode(res.body);
+      log(values.toString());
+      if(values.isNotEmpty){
+        for(int i=0;i<values.length;i++){
+          if(values[i]!=null){
+            Map<String,dynamic> map = values[i];
+            studentList.add(User.marksFromJson(map));
+          }
+        }
+      }
+      return studentList;
+
+    } else {
+      throw "Unable to retrieve student marks";
     }
   }
 
