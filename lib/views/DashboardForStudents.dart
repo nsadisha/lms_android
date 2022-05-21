@@ -25,7 +25,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
 
   late final UserService userService;
   late final CourseService courseService;
-  late final User user;
+  //late final User user;
   late final Course course;
 
   void initServices() async {
@@ -44,9 +44,11 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
    return await courseService.getEnrolledCourses(user.id);
   }
 
-  Future<String> getUserName() async {
-    User user = await userService.getUserDetails();
-    return user.name;
+  Future<User> getUserName() async {
+   final re = await UserService.getInstance();
+    User user = await re.getUserDetails();
+
+    return user;
   }
 
   @override
@@ -73,7 +75,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                             ),
                         ),
                     ),
-                        FutureBuilder<String>(
+                        FutureBuilder<User>(
                           future: getUserName(),
                           builder: (context,snapshot) {
                           if(snapshot.connectionState==ConnectionState.waiting) {
@@ -83,7 +85,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:  <Widget>[
                                 Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                                Text('name', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                                Text(snapshot.data!.name, style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
                                 Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
                               ],

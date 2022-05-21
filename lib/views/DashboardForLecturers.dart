@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lms_android/components/course_card.dart';
-import 'package:lms_android/models/User.dart';
+import 'package:lms_android/models/user.dart';
 import 'package:lms_android/models/course.dart';
-import 'package:lms_android/service/CourseService.dart';
+import 'package:lms_android/service/course_service.dart';
 import 'package:lms_android/service/user_service.dart';
 
 class DashboardForLecturers extends StatefulWidget {
@@ -25,20 +25,31 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
   late final CourseService courseService;
   late final User user;
   late final Course course;
-
+  late final String name;
 
 
 
   void initServices() async {
-    userService = await UserService.getInstance();
-    courseService = await CourseService.getInstance();
-    //user = await userService.getUserDetails();
+    await UserService.getInstance().then((value) => setState((){
+      userService = value;
+    }));
+    await CourseService.getInstance().then((value) => setState((){
+      courseService = value;
+    }));
+    await getUser().then((value) => setState((){
+      user = value;
+    }));
   }
 
-  //get conducting courses
-  Future<List<Course>> fetchCourses(lecturerId) async {
-    return await courseService.getConductingCourses(lecturerId);
+  //get enrolled courses
+  Future<List<Course>> fetchCourses() async {
+    User user = await userService.getUserDetails();
+    return await courseService.getConductingCourses(user.id);
+  }
 
+  Future<User> getUser() async {
+    User user = await userService.getUserDetails();
+    return user;
   }
 
   @override
@@ -56,14 +67,19 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                     height: 150,
                     child: Row(
                       children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Text('name', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
+                        FutureBuilder<User>(
+                          future:getUser(),
+                          builder: (context,snapshot) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:  <Widget>[
+                                Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                                Text('user.name', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                                Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
-                          ],
+                              ],
+                            );
+                          }
                         ),
                         SizedBox(width:100,),
                         Column(
@@ -88,29 +104,32 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                       ],
                     ),
                   ),
-                  Expanded(child: FutureBuilder<List<Course>>(
-                      future:fetchCourses(user.id),
-                      builder: (context,snapshot) {
-                        if(snapshot.connectionState==ConnectionState.waiting) {
-                          return Center(child:  CircularProgressIndicator());
-                        }
-                        if(snapshot.connectionState==ConnectionState.none){
-                          return Text('Error while loading');
-                        }
-                        return GridView.count(
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          primary: false,
-                          crossAxisCount: 2,
-                          children:snapshot.data!.map((course) =>
-                              CourseCard(
-                                  id: course.id,
-                                  courseName: course.courseName,
-                                  courseCode:course.courseCode, lecturerName:
-                                  course.lecturerName)).toList(),
-                        );
-                      }
-                  ))
+                  Expanded(
+                      child: FutureBuilder<List<Course>>(
+                          future: fetchCourses(),
+                          builder: (context,snapshot) {
+                            if(snapshot.hasData) {
+                              return ListView(
+                                padding: const EdgeInsets.all(8),
+                                children: snapshot.data!.map((course) =>
+                                    CourseCard(
+                                        id: course.id,
+                                        courseName: course.courseName,
+                                        courseCode: course.courseCode, lecturerName:
+                                    course.lecturerName)
+                                ).toList(),
+                              );
+                            }else if(snapshot.hasError){
+                              return const Center(
+                                child: Text(
+                                    "Something went wrong!"
+                                ),
+                              );
+                            }
+                            //loading
+                            return const CircularProgressIndicator();
+                          }
+                      ))
 
                 ],
               ),

@@ -108,4 +108,62 @@ class CourseService {
     }
     return res;
   }
+
+  Future<List<Course>> getEnrolledCourses(int studentId) async {
+    final res = await http.get(
+      Uri.parse("$baseURL/student/$studentId/courses"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      List<Course> courseList = <Course>[];
+      List<dynamic> values=<dynamic>[];
+
+      values = json.decode(res.body);
+
+      if(values.isNotEmpty){
+        for(int i=0;i<values.length;i++){
+          if(values[i]!=null){
+            Map<String,dynamic> map = values[i];
+            courseList .add(Course.fromJson(map));
+          }
+        }
+      }
+      return courseList;
+
+    } else {
+      throw "Unable to retrieve courses";
+    }
+  }
+
+  Future<List<Course>> getConductingCourses(int lecturerId) async {
+    final res = await http.get(
+      Uri.parse("$baseURL/lecturer/$lecturerId/courses"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      List<Course> courseList = <Course>[];
+      List<dynamic> values=<dynamic>[];
+
+      values = json.decode(res.body);
+
+      if(values.isNotEmpty){
+        for(int i=0;i<values.length;i++){
+          if(values[i]!=null){
+            Map<String,dynamic> map = values[i];
+            courseList .add(Course.fromJson(map));
+          }
+        }
+      }
+      return courseList;
+
+    } else {
+      throw "Unable to retrieve courses";
+    }
+  }
 }

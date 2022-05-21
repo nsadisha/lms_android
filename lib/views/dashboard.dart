@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/models/User.dart';
+import 'package:lms_android/models/user.dart';
 import 'package:lms_android/views/DashboardForLecturers.dart';
 import 'package:lms_android/views/DashboardForStudents.dart';
 import '../service/user_service.dart';
@@ -17,31 +17,37 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState(){
     super.initState();
-    initUserService();
-    getUserRole();
+
   }
 
   late final UserService userService;
-  late final String userRole = "STUENT";
+  late final User user;
+  late final String userRole;
 
-  void initUserService() async {
+  Future<User> getUserRole() async {
     userService = await UserService.getInstance();
-  }
-
-  Future getUserRole() async {
-    User user = (await userService.getUserDetails()) as User;
-    //userRole=user.role;
+    user = await userService.getUserDetails();
+    return user;
   }
 
 
   @override
   Widget build(BuildContext context) {
-    if(userRole == "STUDENT"){
-      return const DashboardForStudents();
-    }
-    else{
-      return const DashboardForLecturers();
-    }
+  return FutureBuilder<User>(
+    future: getUserRole(),
+    builder: (context,snapshot){
+      if(snapshot.connectionState == ConnectionState.waiting){
+        return const Center(child: CircularProgressIndicator());
+      }
+      if( snapshot.data!.role == "STUDENT"){
+        return const DashboardForStudents();
+      }
+      else{
+        return const DashboardForLecturers();
+      }
+    },
+    );
+
 
   }
 }
