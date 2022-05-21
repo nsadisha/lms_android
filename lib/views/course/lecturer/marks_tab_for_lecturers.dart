@@ -48,7 +48,8 @@ class _MarksTabForLecturersState extends State<MarksTabForLecturers> {
                   double? marks = snapshot.data!.elementAt(index).marks;
 
                   return StudentMarksCard(
-                      student: User.marks(id, email, name, marks)
+                      student: User.marks(id, email, name, marks),
+                     courseId: widget.courseId,
                   );
                 });
           }else if (snapshot.hasError) {
