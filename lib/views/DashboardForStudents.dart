@@ -121,13 +121,14 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                   child: FutureBuilder<List<Course>>(
                 future: fetchCourses(),
                 builder: (context,snapshot) {
-                  // if(snapshot.connectionState==ConnectionState.waiting) {
-                  //   return const Center(child:  CircularProgressIndicator());
-                  // }
-                  // if(snapshot.connectionState==ConnectionState.none){
-                  //   return const Text('Error while loading');
-                  // }
                   if(snapshot.hasData) {
+                    if(snapshot.data == null){
+                      return const Center(
+                        child: Text(
+                            "No conducting courses!"
+                        ),
+                      );
+                    }
                     return ListView(
                       padding: const EdgeInsets.all(8),
                       children: snapshot.data!.map((course) =>
