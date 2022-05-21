@@ -47,6 +47,7 @@ class StudentService {
       },
     );
     if (res.statusCode == 200) {
+      _userService.refreshToken();
       return res;
     } else {
       throw "Unable to unenroll student";
