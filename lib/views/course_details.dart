@@ -38,8 +38,7 @@ class _CourseDetailsState extends State<CourseDetails> {
     Size size = MediaQuery.of(context).size;
 
     navigateToCourseContent(){
-      log("Success");
-      // Navigator.pop(context, true);
+      Navigator.pop(context, true);
     }
 
     final topContentText = Column(
