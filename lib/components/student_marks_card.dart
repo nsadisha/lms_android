@@ -37,6 +37,10 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
 
     Size size = MediaQuery.of(context).size;
 
+    navigateBack(){
+      Navigator.pop(context, true);
+    }
+
     return Card(
       clipBehavior: Clip.antiAlias,
       elevation: 4.0,
@@ -179,8 +183,7 @@ class _StudentMarksCardState extends State<StudentMarksCard> {
                                                   widget.student.id,
                                                   widget.student.marks!);
                                               if(response.statusCode == 200){
-                                                log("Success");
-                                                // navigateBack();
+                                                navigateBack();
                                               }else{
                                                 log(response.statusCode.toString());
                                               }
