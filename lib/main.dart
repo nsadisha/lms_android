@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/views/course/course.dart';
 import 'package:lms_android/views/courses.dart';
-import 'package:lms_android/views/dashboard/dashboard.dart';
+import 'package:lms_android/views/dashboard.dart';
 import 'package:lms_android/views/profile.dart';
 import 'package:lms_android/views/signin.dart';
 import 'package:lms_android/views/signup.dart';
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: const Color.fromRGBO(34, 47, 91, 1)
       ),
@@ -59,6 +60,7 @@ class _HomeState extends State<Home> {
         title: const Text('Learning Management System'),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

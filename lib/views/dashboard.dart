@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lms_android/models/user.dart';
 import 'package:lms_android/views/dashboard/dashboard_for_lecturers.dart';
 import 'package:lms_android/views/dashboard/dashboard_for_students.dart';
-import '../../service/user_service.dart';
+import '../service/user_service.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -17,7 +17,6 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState(){
     super.initState();
-
   }
 
   late final UserService userService;

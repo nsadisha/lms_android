@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:lms_android/baseURL.dart';
 import 'package:lms_android/models/user.dart';
+import 'package:lms_android/service/course_service.dart';
+import 'package:lms_android/views/signin.dart';
+import '../models/course.dart';
 import 'local_storage_manager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -74,6 +77,7 @@ class UserService{
 
    signout() async{
     _storage.removeAllTokens();
+
   }
 
   Future<User> getUserDetails() async {

@@ -1,33 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:lms_android/models/user.dart';
+import 'package:lms_android/service/user_service.dart';
+import 'package:lms_android/views/Profile/profile_for_lecturers.dart';
+import 'package:lms_android/views/Profile/profile_for_students.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
+  State<Profile> createState() => _Profile();
+}
+
+class _Profile extends State<Profile> {
+
+  @override
+  void initState(){
+    super.initState();
+
+  }
+
+  late final UserService userService;
+  late final String userRole;
+
+  Future<User> getUserRole() async {
+    userService = await UserService.getInstance();
+    User user = await userService.getUserDetails();
+    return user;
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 25),
-      child: Column(
-        children: [
-          Text("Profile", style: Theme.of(context).textTheme.headline4,),
-          SizedBox(height: 50,),
-          Container(
-            width: 150,
-            height: 150,
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: NetworkImage("https://picsum.photos/250?image=9")
-                )
-            ),
-          ),
-          SizedBox(height: 30,),
-          Text("Sadisha Nimsara",style: Theme.of(context).textTheme.headline5),
-          Text("nsadisha@gmail.com", style: Theme.of(context).textTheme.bodyMedium,),
-          Expanded(child: Container(),),
-          ElevatedButton(onPressed: (){print("Signout");}, child: Text("Signout"))
-        ],
-      ),
+    return FutureBuilder<User>(
+      future: getUserRole(),
+      builder: (context,snapshot){
+        if(snapshot.hasData) {
+          if (snapshot.data!.role == "STUDENT") {
+            return const ProfileForStudents();
+          }
+          else {
+            return const ProfileForLecturers();
+          }
+        }
+
+        return const Center(child: CircularProgressIndicator(),);
+      },
     );
+
   }
 }
+
