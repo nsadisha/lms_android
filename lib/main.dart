@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/models/course.dart';
-import 'package:lms_android/views/course.dart';
-import 'package:lms_android/views/course_content.dart';
-import 'package:lms_android/views/course_details.dart';
+import 'package:lms_android/views/course/course.dart';
 import 'package:lms_android/views/courses.dart';
 import 'package:lms_android/views/dashboard.dart';
 import 'package:lms_android/views/profile.dart';
@@ -20,6 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
+      theme: ThemeData(
+          primaryColor: const Color.fromRGBO(34, 47, 91, 1)
+      ),
       initialRoute: '/login',
       routes: {
         '/': (context) => const Home(),
@@ -40,8 +40,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Courses(),
@@ -60,7 +58,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Learning Management System'),
         centerTitle: true,
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

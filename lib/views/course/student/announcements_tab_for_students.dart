@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/announcement_tile.dart';
 import 'package:lms_android/components/empty_state.dart';
@@ -37,25 +39,27 @@ class _AnnouncementsTabForStudentsState extends State<AnnouncementsTabForStudent
       future: fetchAnnouncements(widget.courseId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data?.length,
-            itemBuilder: (BuildContext context, int index){
+          if (snapshot.data!.isEmpty){
+            return const EmptyState(text: "No announcements",);
+          }else{
+            return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (BuildContext context, int index){
 
-              int id = snapshot.data!.elementAt(index).id;
-              String title = snapshot.data!.elementAt(index).title;
-              String body = snapshot.data!.elementAt(index).body;
+                  int id = snapshot.data!.elementAt(index).id;
+                  String title = snapshot.data!.elementAt(index).title;
+                  String body = snapshot.data!.elementAt(index).body;
 
-              return AnnouncementTile(
-                  id: id,
-                  title: title,
-                  body: body
-              );
-            });
+                  return AnnouncementTile(
+                      id: id,
+                      title: title,
+                      body: body
+                  );
+                });
+          }
         } else if (snapshot.hasError) {
-          return const EmptyState(text: "No announcements",);
+          return const EmptyState(text: "No announcements");
         }
-
-        // By default, show a loading spinner.
         return const CircularProgressIndicator();
       },
     );

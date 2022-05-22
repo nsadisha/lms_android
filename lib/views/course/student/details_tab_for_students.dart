@@ -40,6 +40,10 @@ class _DetailsTabForStudentsState extends State<DetailsTabForStudents> {
 
     Size size = MediaQuery.of(context).size;
 
+    navigateToCourses(){
+      Navigator.pop(context, true);
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(30.0),
       child: Column(
@@ -161,8 +165,7 @@ class _DetailsTabForStudentsState extends State<DetailsTabForStudents> {
                       if (exit) {
                         var response = await studentService.unEnrollStudent(widget.userId, widget.course.id);
                         if(response.statusCode == 200){
-                          log(response.statusCode.toString());
-                          // setState(() {});
+                          navigateToCourses();
                         }else{
                           log(response.statusCode.toString());
                         }

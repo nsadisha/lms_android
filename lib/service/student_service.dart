@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:lms_android/models/user.dart';
-
+import 'package:lms_android/service/user_service.dart';
 import '../baseURL.dart';
 import 'package:http/http.dart' as http;
 import 'local_storage_manager.dart';
@@ -10,10 +10,12 @@ class StudentService {
   final baseURL = BaseURL.url;
   late final String _token;
   static StudentService? _instance;
+  static late final UserService _userService;
 
   static Future<StudentService> getInstance() async {
     if(_instance == null){
       final lsm = await LocalStorageManager.getInstance();
+      _userService = await UserService.getInstance();
       _instance = StudentService._(await lsm.getToken());
     }
     return _instance!;
@@ -60,6 +62,7 @@ class StudentService {
       },
     );
     if (res.statusCode == 200) {
+      _userService.refreshToken();
       return res;
     } else {
       throw "Unable to unenroll student";
@@ -75,11 +78,11 @@ class StudentService {
       },
     );
     if (res.statusCode == 200) {
+      _userService.refreshToken();
       return res;
     } else {
       throw "Unable to enroll student";
     }
   }
-
 }
 

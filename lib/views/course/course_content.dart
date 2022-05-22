@@ -6,7 +6,7 @@ import 'package:lms_android/views/course/lecturer/details_tab_for_lecturers.dart
 import 'package:lms_android/views/course/lecturer/marks_tab_for_lecturers.dart';
 import 'package:lms_android/views/course/student/activity_tab_for_students.dart';
 import 'package:lms_android/views/course/student/announcements_tab_for_students.dart';
-import 'course/student/details_tab_for_students.dart';
+import 'student/details_tab_for_students.dart';
 
 class CourseContent extends StatefulWidget {
   final Course course;
@@ -51,6 +51,7 @@ class _CourseContentState extends State<CourseContent> {
         appBar: AppBar(
           title: Text(widget.course.courseName),
           elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: (){
