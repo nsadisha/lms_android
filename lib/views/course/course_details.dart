@@ -38,8 +38,7 @@ class _CourseDetailsState extends State<CourseDetails> {
     Size size = MediaQuery.of(context).size;
 
     navigateToCourseContent(){
-      log("Success");
-      // Navigator.pop(context, true);
+      Navigator.pop(context, true);
     }
 
     final topContentText = Column(
@@ -82,16 +81,16 @@ class _CourseDetailsState extends State<CourseDetails> {
         Container(
             padding: const EdgeInsets.only(left: 10.0),
             height: size.height * 0.5,
-            decoration: const BoxDecoration(
-              color: Color(0xff7c94b6),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
             )
         ),
         Container(
           height: size.height * 0.5,
           padding: const EdgeInsets.all(40.0),
           width: size.width,
-          decoration: const BoxDecoration(
-              color: Color.fromRGBO(58, 66, 86, .9),
+          decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
           ),
           child: Center(
             child: topContentText,

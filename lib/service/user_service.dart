@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:lms_android/baseURL.dart';
 import 'package:lms_android/models/user.dart';
-import 'package:lms_android/service/course_service.dart';
-import '../models/course.dart';
 import 'local_storage_manager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -70,6 +68,10 @@ class UserService{
     return await _storage.getToken();
   }
 
+  Future<String> getRefreshToken() async {
+    return await _storage.getToken();
+  }
+
    signout() async{
     _storage.removeAllTokens();
   }
@@ -83,5 +85,23 @@ class UserService{
     }
   }
 
+  Future<http.Response> refreshToken() async {
+    final res = await http.get(
+      Uri.parse("$baseURL/refresh_token"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${await getRefreshToken()}"
+      },
+    );
+
+    if (res.statusCode == 200) {
+      final obj = jsonDecode(res.body);
+      _storage.setToken(obj["access_token"]);
+      _storage.setRefreshToken(obj["refresh_token"]);
+      return res;
+    } else {
+      throw "Unable to refresh token";
+    }
+  }
 
 }

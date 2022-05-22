@@ -51,6 +51,7 @@ class _CourseContentState extends State<CourseContent> {
         appBar: AppBar(
           title: Text(widget.course.courseName),
           elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: (){
