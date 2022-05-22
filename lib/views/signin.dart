@@ -26,12 +26,17 @@ class _SigninViewState extends State<SigninView> {
   User user = User("", "");
 
   void initUserService() async {
-    userService = await UserService.getInstance();
+    await UserService.getInstance().then((value) => setState((){
+      userService = value;
+    }));
+  }
+
+  Future<bool> isSigned() async {
+    return await userService.isSigned();
   }
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     navigateToHome(){
@@ -77,8 +82,8 @@ class _SigninViewState extends State<SigninView> {
                       return null;
                     },
                     decoration: const InputDecoration(
-                        errorStyle: TextStyle(fontSize: 10, color: Colors.black),
-                        labelText: "Email Address",
+                      errorStyle: TextStyle(fontSize: 10, color: Colors.black),
+                      labelText: "Email Address",
                     ),
                   ),
                 ),
@@ -125,47 +130,47 @@ class _SigninViewState extends State<SigninView> {
                   alignment: Alignment.centerRight,
                   margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: Stack(
-                      children: <Widget>[
-                        Positioned.fill(
-                          child: Container(
-                                height: 50.0,
-                                width: size.width * 0.5,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(80.0),
-                                    gradient: const LinearGradient(
-                                        colors: [
-                                          Color.fromARGB(255, 255, 136, 34),
-                                          Color.fromARGB(255, 255, 177, 41)
-                                        ]
-                                    )
-                                ),
+                    children: <Widget>[
+                      Positioned.fill(
+                        child: Container(
+                          height: 50.0,
+                          width: size.width * 0.5,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(80.0),
+                              gradient: const LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(255, 255, 136, 34),
+                                    Color.fromARGB(255, 255, 177, 41)
+                                  ]
+                              )
                           ),
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
-                            primary: Colors.white,
-                            // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-                            textStyle: const TextStyle(fontSize: 14),
-                          ),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              var response = await userService.signin(user.email, user.password);
-                              if(response.statusCode == 200){
-                                navigateToHome();
-                              }else{
-                                log(response.statusCode.toString());
-                              }
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.fromLTRB(75.0,15.0,75.0,15.0),
+                          primary: Colors.white,
+                          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+                          textStyle: const TextStyle(fontSize: 14),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            var response = await userService.signin(user.email, user.password);
+                            if(response.statusCode == 200){
+                              navigateToHome();
+                            }else{
+                              log(response.statusCode.toString());
                             }
-                          },
-                          child: const Text(
-                              "LOGIN",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                              ),
+                          }
+                        },
+                        child: const Text(
+                          "LOGIN",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold
                           ),
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 ),
 
