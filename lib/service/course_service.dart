@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:lms_android/baseURL.dart';
 import 'package:lms_android/models/course.dart';
@@ -116,6 +117,8 @@ class CourseService {
         "Authorization": "Bearer $_token"
       },
     );
+    log(_token);
+    log(res.statusCode.toString());
     if (res.statusCode == 200) {
       List<Course> courseList = <Course>[];
       List<dynamic> values=<dynamic>[];
@@ -145,6 +148,7 @@ class CourseService {
         "Authorization": "Bearer $_token"
       },
     );
+
     if (res.statusCode == 200) {
       List<Course> courseList = <Course>[];
       List<dynamic> values=<dynamic>[];

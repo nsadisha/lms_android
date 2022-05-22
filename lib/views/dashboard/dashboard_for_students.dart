@@ -46,6 +46,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
 
   //get enrolled courses
   Future<List<Course>> fetchCourses() async {
+    await Future.delayed(const Duration(seconds: 1));
     return await courseService.getEnrolledCourses(user.id);
   }
 
@@ -147,12 +148,12 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                               course.lecturerName)
                           ).toList(),
                         );
-                      }else if(snapshot.connectionState == ConnectionState.waiting){
-                        return const Center(child:CircularProgressIndicator());
+                      }else if(snapshot.hasError){
+                        log(snapshot.error.toString());
+                        return const Center(child: Text("Error loading courses!"));
                       }
-                      else {
-                        return const Center(child:CircularProgressIndicator());
-                      }
+
+                      return const Center(child:CircularProgressIndicator());
                     }
                 ))
 

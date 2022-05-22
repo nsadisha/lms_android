@@ -3,6 +3,8 @@ import 'package:lms_android/models/user.dart';
 import 'package:lms_android/service/student_service.dart';
 import 'package:lms_android/service/user_service.dart';
 
+import '../signin.dart';
+
 class ProfileForStudents extends StatefulWidget {
   const ProfileForStudents({Key? key}) : super(key: key);
 
@@ -76,7 +78,8 @@ class _ProfileForStudents extends State<ProfileForStudents> {
                         ),
                         onPressed: (){
                       signout().then((value) => {
-                        Navigator.pushNamed(context, '/login')
+                        // Navigator.popUntil(context, ModalRoute.withName('/login'))
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SigninView() ))
                       });
                       },
                         child: const Text("Signout")),

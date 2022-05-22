@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/user.dart';
 import 'package:lms_android/views/dashboard/dashboard_for_lecturers.dart';
@@ -37,8 +40,7 @@ class _DashboardState extends State<Dashboard> {
       if(snapshot.hasData) {
         if (snapshot.data!.role == "STUDENT") {
           return const DashboardForStudents();
-        }
-        else {
+        } else {
           return const DashboardForLecturers();
         }
       }
