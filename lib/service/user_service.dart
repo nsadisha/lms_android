@@ -77,7 +77,7 @@ class UserService{
 
    signout() async{
     _storage.removeAllTokens();
-    return const SigninView();
+
   }
 
   Future<User> getUserDetails() async {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/user.dart';
 import 'package:lms_android/service/lecturer_service.dart';
-import 'package:lms_android/service/student_service.dart';
 import 'package:lms_android/service/user_service.dart';
 
 class ProfileForLecturers extends StatefulWidget {
@@ -39,10 +38,14 @@ class _ProfileForLecturers extends State<ProfileForLecturers> {
     return await lecturerService.getLecturerDetails(user.id);
   }
 
+  Future<void> signout() async {
+    await userService.signout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 25),
+      margin: const EdgeInsets.only(top: 25),
       child: FutureBuilder<User>(
           future: getUser(),
           builder: (context,snapshot) {
@@ -51,7 +54,7 @@ class _ProfileForLecturers extends State<ProfileForLecturers> {
               return Column(
                 children: [
                   Text("Profile", style: Theme.of(context).textTheme.headline4,),
-                  SizedBox(height: 50,),
+                  const SizedBox(height: 50,),
                   Container(
                     width: 150,
                     height: 150,
@@ -62,11 +65,18 @@ class _ProfileForLecturers extends State<ProfileForLecturers> {
                         )
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   Text(snapshot.data!.name,style: Theme.of(context).textTheme.headline5),
                   Text(snapshot.data!.email, style: Theme.of(context).textTheme.bodyMedium,),
                   Expanded(child: Container(),),
-                  ElevatedButton(onPressed: (){return userService.signout();}, child: Text("Signout"))
+                  ElevatedButton(
+                      onPressed: (){
+                        signout().then((value) => {
+                          Navigator.pushNamed(context, '/login')
+                        });
+                      },
+                      child: const Text("Signout")
+                  )
                 ],
 
               );
@@ -79,7 +89,7 @@ class _ProfileForLecturers extends State<ProfileForLecturers> {
                 ),
               );
             }
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
 
           }
       ),

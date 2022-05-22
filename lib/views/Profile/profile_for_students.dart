@@ -38,10 +38,14 @@ class _ProfileForStudents extends State<ProfileForStudents> {
     return await studentService.getStudentDetails(user.id);
   }
 
+  Future<void> signout() async {
+    await userService.signout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 25),
+      margin: const EdgeInsets.only(top: 25),
       child: FutureBuilder<User>(
           future: getUser(),
           builder: (context,snapshot) {
@@ -50,7 +54,7 @@ class _ProfileForStudents extends State<ProfileForStudents> {
               return Column(
                 children: [
                   Text("Profile", style: Theme.of(context).textTheme.headline4,),
-                  SizedBox(height: 50,),
+                  const SizedBox(height: 50,),
                   Container(
                     width: 150,
                     height: 150,
@@ -61,11 +65,17 @@ class _ProfileForStudents extends State<ProfileForStudents> {
                         )
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   Text(snapshot.data!.name,style: Theme.of(context).textTheme.headline5),
                   Text(snapshot.data!.email, style: Theme.of(context).textTheme.bodyMedium,),
                   Expanded(child: Container(),),
-                  ElevatedButton(onPressed: (){return userService.signout();}, child: Text("Signout"))
+                  ElevatedButton(
+                      onPressed: (){
+                    signout().then((value) => {
+                      Navigator.pushNamed(context, '/login')
+                    });
+                    },
+                      child: const Text("Signout"))
                 ],
               );
             }
@@ -76,7 +86,7 @@ class _ProfileForStudents extends State<ProfileForStudents> {
                 ),
               );
             }
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
 
           }
       ),
