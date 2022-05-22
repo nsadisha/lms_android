@@ -70,6 +70,9 @@ class _ProfileForLecturers extends State<ProfileForLecturers> {
                   Text(snapshot.data!.email, style: Theme.of(context).textTheme.bodyMedium,),
                   Expanded(child: Container(),),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.grey
+                      ),
                       onPressed: (){
                         signout().then((value) => {
                           Navigator.pushNamed(context, '/login')
@@ -82,15 +85,12 @@ class _ProfileForLecturers extends State<ProfileForLecturers> {
               );
 
             }
-            if(snapshot.hasError){
-              return const Center(
-                child: Text(
-                    "Something went wrong!"
-                ),
-              );
+            else if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child:CircularProgressIndicator());
             }
-            return const Center(child: CircularProgressIndicator());
-
+            else {
+              return const Center(child:CircularProgressIndicator());
+            }
           }
       ),
     );

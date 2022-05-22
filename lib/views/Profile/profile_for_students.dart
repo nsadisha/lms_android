@@ -70,24 +70,25 @@ class _ProfileForStudents extends State<ProfileForStudents> {
                   Text(snapshot.data!.email, style: Theme.of(context).textTheme.bodyMedium,),
                   Expanded(child: Container(),),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.grey
+                      ),
                       onPressed: (){
                     signout().then((value) => {
                       Navigator.pushNamed(context, '/login')
                     });
                     },
                       child: const Text("Signout"))
+
                 ],
               );
             }
-            if(snapshot.hasError){
-              return const Center(
-                child: Text(
-                    "Something went wrong!"
-                ),
-              );
+            else if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child:CircularProgressIndicator());
             }
-            return const Center(child: CircularProgressIndicator());
-
+            else {
+              return const Center(child:CircularProgressIndicator());
+            }
           }
       ),
     );
