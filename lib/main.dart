@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lms_android/views/course.dart';
+import 'package:lms_android/views/course/course.dart';
 import 'package:lms_android/views/courses.dart';
-import 'package:lms_android/views/dashboard.dart';
+import 'package:lms_android/views/dashboard/dashboard.dart';
 import 'package:lms_android/views/profile.dart';
 import 'package:lms_android/views/signin.dart';
 import 'package:lms_android/views/signup.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: const Color.fromRGBO(34, 47, 91, 1)
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => const Home(),
         '/login': (context) => const SigninView(),

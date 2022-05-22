@@ -7,7 +7,9 @@ import 'local_storage_manager.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class UserService{
+
   final baseURL = BaseURL.url;
+
   final LocalStorageManager _storage;
   static UserService? _instance;
 
@@ -101,4 +103,5 @@ class UserService{
       throw "Unable to refresh token";
     }
   }
+
 }

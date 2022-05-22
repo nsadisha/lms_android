@@ -66,6 +66,21 @@ class LecturerService {
     }
   }
 
+  Future<User> getLecturerDetails(int lecturerId) async {
+    final res = await http.get(
+      Uri.parse("$baseURL/lecturer/$lecturerId"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token"
+      },
+    );
+    if (res.statusCode == 200) {
+      return User.fromJson(jsonDecode(res.body));
+    } else {
+      throw "Unable to retrieve lecturer";
+    }
+  }
+
   Future<http.Response> assignMarksToStudent(int courseId, int studentId, double marks) async {
     final res = await http.post(
       Uri.parse("$baseURL/lecturer/$courseId/student/$studentId/mark/$marks"),
