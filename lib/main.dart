@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: const Color.fromRGBO(34, 47, 91, 1)
       ),
@@ -59,6 +60,7 @@ class _HomeState extends State<Home> {
         title: const Text('Learning Management System'),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
