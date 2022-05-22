@@ -61,48 +61,37 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
           padding:  const EdgeInsets.only(top: 25.0, left: 18.0, right: 18.0),
           child: Column(
             children:<Widget>[
-              SizedBox(
+              Container(
                 height: 150,
                 child: Row(
                   children: <Widget>[
                     FutureBuilder<User>(
-                      future:getUser(),
-                      builder: (context,snapshot) {
-                        if(!snapshot.hasData){
-                          return const Center(child: CircularProgressIndicator(),);
-                        }
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  <Widget>[
-                            const Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
-                            Flexible(child:
-                                Text(snapshot.data!.name,
-                                style: const TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9),
+                        future:getUser(),
+                        builder: (context,snapshot) {
+                          if(!snapshot.hasData){
+                            return const Center(child: CircularProgressIndicator(),);
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:  <Widget>[
+                              Text('Hello', style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9)),
+                              Flexible(child:
+                              Text(snapshot.data!.name,
+                                style: TextStyle(fontFamily: 'Mukta',fontSize: 30,height: 0.9),
                                 overflow: TextOverflow.fade,
-                                )
-                            ),
-                            const Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
+                              )
+                              ),
+                              Text('Welcome Back!', style: TextStyle(fontFamily: 'Mukta',fontSize: 25,color: Colors.grey))
 
-                          ],
-                        );
-                      }
+                            ],
+                          );
+                        }
                     ),
-                    Expanded(child: Container()),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.end,
-                    //   children: const [
-                    //     SizedBox(
-                    //       width: 80,
-                    //       child: (
-                    //           Image(image: AssetImage('assets/images/teacher.png'))
-                    //       ),
-                    //     ),
-                    //   ],
-                    // )
+
                   ],
                 ),
               ),
-              SizedBox(
+              Container(
                 height: 60,
                 child: Row(
                   children: const <Widget>[
@@ -115,13 +104,6 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                       future: fetchCourses(),
                       builder: (context,snapshot) {
                         if(snapshot.hasData) {
-                          if(snapshot.data == null){
-                            return const Center(
-                              child: Text(
-                                  "No conducting courses!"
-                              ),
-                            );
-                          }
                           return ListView(
                             padding: const EdgeInsets.all(8),
                             children: snapshot.data!.map((course) =>
@@ -132,15 +114,12 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                                 course.lecturerName)
                             ).toList(),
                           );
-                        }else if(snapshot.hasError){
-                          return const Center(
-                            child: Text(
-                                "Something went wrong!"
-                            ),
-                          );
+                        }else if(snapshot.connectionState == ConnectionState.waiting){
+                          return const Center(child:CircularProgressIndicator());
                         }
-                        //loading
-                        return const CircularProgressIndicator();
+                        else {
+                          return const Center(child:CircularProgressIndicator());
+                        }
                       }
                   ))
 
