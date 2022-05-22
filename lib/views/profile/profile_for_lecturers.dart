@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/models/user.dart';
-import 'package:lms_android/service/student_service.dart';
+import 'package:lms_android/service/lecturer_service.dart';
 import 'package:lms_android/service/user_service.dart';
 
-class ProfileForStudents extends StatefulWidget {
-  const ProfileForStudents({Key? key}) : super(key: key);
+class ProfileForLecturers extends StatefulWidget {
+  const ProfileForLecturers({Key? key}) : super(key: key);
 
   @override
-  State<ProfileForStudents> createState() => _ProfileForStudents();
+  State<ProfileForLecturers> createState() => _ProfileForLecturers();
 }
 
-class _ProfileForStudents extends State<ProfileForStudents> {
+class _ProfileForLecturers extends State<ProfileForLecturers> {
   @override
   void initState(){
     super.initState();
@@ -18,7 +18,7 @@ class _ProfileForStudents extends State<ProfileForStudents> {
   }
 
   late final UserService userService;
-  late final StudentService studentService;
+  late final LecturerService lecturerService;
 
   late final User user ;
 
@@ -26,8 +26,8 @@ class _ProfileForStudents extends State<ProfileForStudents> {
     await UserService.getInstance().then((value) => setState((){
       userService = value;
     }));
-    await StudentService.getInstance().then((value) => setState((){
-      studentService = value;
+    await LecturerService.getInstance().then((value) => setState((){
+      lecturerService = value;
     }));
     await userService.getUserDetails().then((value) => setState((){
       user = value;
@@ -35,7 +35,7 @@ class _ProfileForStudents extends State<ProfileForStudents> {
   }
 
   Future<User> getUser() async{
-    return await studentService.getStudentDetails(user.id);
+    return await lecturerService.getLecturerDetails(user.id);
   }
 
   Future<void> signout() async {
@@ -53,7 +53,7 @@ class _ProfileForStudents extends State<ProfileForStudents> {
             if(snapshot.hasData){
               return Column(
                 children: [
-                  Text("Profile", style: Theme.of(context).textTheme.headline4,),
+                  Text("Lecturer", style: Theme.of(context).textTheme.headline4,),
                   const SizedBox(height: 50,),
                   Container(
                     width: 150,
@@ -61,27 +61,31 @@ class _ProfileForStudents extends State<ProfileForStudents> {
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: AssetImage('assets/images/graduate.png')
+                            image: AssetImage('assets/images/teacher.png')
                         )
                     ),
                   ),
                   const SizedBox(height: 30,),
                   Text(snapshot.data!.name,style: Theme.of(context).textTheme.headline5),
                   Text(snapshot.data!.email, style: Theme.of(context).textTheme.bodyMedium,),
-                  Expanded(child: Container(),),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey
-                      ),
-                      onPressed: (){
-                    signout().then((value) => {
-                      Navigator.pushNamed(context, '/login')
-                    });
-                    },
-                      child: const Text("Signout"))
-
+                  Container(
+                    padding: EdgeInsets.only(top: 30.0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.grey
+                        ),
+                        onPressed: (){
+                          signout().then((value) => {
+                            Navigator.pushNamed(context, '/login')
+                          });
+                        },
+                        child: const Text("Signout")
+                    ),
+                  )
                 ],
+
               );
+
             }
             else if(snapshot.connectionState == ConnectionState.waiting){
               return const Center(child:CircularProgressIndicator());

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/student_marks_card.dart';
-import 'package:lms_android/models/user.dart';
 import 'package:lms_android/service/lecturer_service.dart';
+
+import '../../../models/student.dart';
 
 class MarksTabForLecturers extends StatefulWidget {
   final int courseId;
@@ -27,14 +28,14 @@ class _MarksTabForLecturersState extends State<MarksTabForLecturers> {
     }));
   }
 
-  Future<List<User>> getEnrolledStudentMarks() async {
+  Future<List<Student>> getEnrolledStudentMarks() async {
     return await lecturerService.getEnrolledStudentsMarks(widget.courseId);
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder<List<User>>(
+    return FutureBuilder<List<Student>>(
         future: getEnrolledStudentMarks(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -48,7 +49,7 @@ class _MarksTabForLecturersState extends State<MarksTabForLecturers> {
                   double? marks = snapshot.data!.elementAt(index).marks;
 
                   return StudentMarksCard(
-                      student: User.marks(id, email, name, marks),
+                      student: Student(id, email, name, marks),
                      courseId: widget.courseId,
                   );
                 });
