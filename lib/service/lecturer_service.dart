@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:lms_android/models/student.dart';
+
 import '../baseURL.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
@@ -35,7 +37,7 @@ class LecturerService {
     }
   }
 
-  Future<List<User>> getEnrolledStudentsMarks(int courseId) async {
+  Future<List<Student>> getEnrolledStudentsMarks(int courseId) async {
     final res = await http.get(
       Uri.parse("$baseURL/lecturer/$courseId/students/marks"),
       headers: {
@@ -45,7 +47,7 @@ class LecturerService {
     );
 
     if (res.statusCode == 200) {
-      List<User> studentList = <User>[];
+      List<Student> studentList = <Student>[];
       List<dynamic> values=<dynamic>[];
 
       values = json.decode(res.body);
@@ -54,7 +56,7 @@ class LecturerService {
         for(int i=0;i<values.length;i++){
           if(values[i]!=null){
             Map<String,dynamic> map = values[i];
-            studentList.add(User.marksFromJson(map));
+            studentList.add(Student.fromJson(map));
           }
         }
       }

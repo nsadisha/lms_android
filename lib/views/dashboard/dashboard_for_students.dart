@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/course_card.dart';
 import 'package:lms_android/models/user.dart';
@@ -44,6 +46,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
 
   //get enrolled courses
   Future<List<Course>> fetchCourses() async {
+    await Future.delayed(const Duration(seconds: 1));
     return await courseService.getEnrolledCourses(user.id);
   }
 
@@ -75,9 +78,7 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                   FutureBuilder<User>(
                       future: getUserName(),
                       builder: (context,snapshot) {
-                        if(snapshot.connectionState==ConnectionState.waiting) {
-                          return const Center(child:  CircularProgressIndicator());
-                        }else if(snapshot.hasData){
+                        if(snapshot.hasData){
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:  <Widget>[
@@ -100,9 +101,10 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
 
                             ],
                           );
-                        }else {
-                          return const Center(child:CircularProgressIndicator());
+                        }else if (snapshot.hasError) {
+                          return const Text("Error");
                         }
+                        return const CircularProgressIndicator();
                       }
                   ),
 
@@ -136,7 +138,6 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                     future: fetchCourses(),
                     builder: (context,snapshot) {
                       if(snapshot.hasData) {
-
                         return ListView(
                           padding: const EdgeInsets.all(8),
                           children: snapshot.data!.map((course) =>
@@ -147,13 +148,12 @@ class _DashboardForStudentsState extends State<DashboardForStudents> {
                               course.lecturerName)
                           ).toList(),
                         );
-                      }else
-                      if(snapshot.connectionState == ConnectionState.waiting){
-                        return const Center(child:CircularProgressIndicator());
+                      }else if(snapshot.hasError){
+                        log(snapshot.error.toString());
+                        return const Center(child: Text("Error loading courses!"));
                       }
-                      else {
-                        return const Center(child:CircularProgressIndicator());
-                      }
+
+                      return const Center(child:CircularProgressIndicator());
                     }
                 ))
 

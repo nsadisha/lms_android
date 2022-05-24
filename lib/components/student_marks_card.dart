@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:lms_android/models/student.dart';
 import 'package:lms_android/service/lecturer_service.dart';
-import '../models/user.dart';
 
 class StudentMarksCard extends StatefulWidget {
 
-  final User student;
+  final Student student;
   final int courseId;
 
   const StudentMarksCard({
