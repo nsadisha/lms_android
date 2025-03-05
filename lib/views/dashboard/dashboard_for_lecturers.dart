@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lms_android/components/course_card.dart';
 import 'package:lms_android/models/user.dart';
@@ -104,6 +106,7 @@ class _DashboardForLecturersState extends State<DashboardForLecturers> {
                       future: fetchCourses(),
                       builder: (context,snapshot) {
                         if(snapshot.hasData) {
+                          log(snapshot.data.toString());
                           return ListView(
                             padding: const EdgeInsets.all(8),
                             children: snapshot.data!.map((course) =>
